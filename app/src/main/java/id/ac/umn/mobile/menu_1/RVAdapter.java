@@ -1,6 +1,7 @@
 package id.ac.umn.mobile.menu_1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,9 +19,11 @@ import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.LevelViewHolder>{
     private List<TutorialLevel> levels;
+    private int current_level;
 
-    RVAdapter(List<TutorialLevel> levels){
+    RVAdapter(List<TutorialLevel> levels, int current_level){
         this.levels = levels;
+        this.current_level = current_level;
     }
 
     public static class LevelViewHolder extends RecyclerView.ViewHolder {
@@ -32,6 +35,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.LevelViewHolder>{
         LevelViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
+
             levelName = (TextView)itemView.findViewById(R.id.level_name);
             levelDesc = (TextView)itemView.findViewById(R.id.level_desc);
             levelIcon = (ImageView)itemView.findViewById(R.id.level_icon);
@@ -47,21 +51,33 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.LevelViewHolder>{
 
     @Override
     public void onBindViewHolder(LevelViewHolder personViewHolder, final int i) {
+        /*CardView cv = (CardView) personViewHolder.cv;
+
+        if(i>current_level)
+        {
+            cv.setClickable(false);
+        }*/
+
         personViewHolder.levelName.setText(levels.get(i).title);
         personViewHolder.levelDesc.setText(levels.get(i).info);
         personViewHolder.levelIcon.setImageResource(levels.get(i).icon);
 
-
         personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v){
                 Intent intent;
-                if(i == 0)
+                if(i == 0 && i<=current_level-1) {
                     intent = new Intent(v.getContext(), BeginnerActivity.class);
-                else if(i == 1)
+                    v.getContext().startActivity(intent);
+                }
+                else if(i == 1 && i<=current_level-1) {
                     intent = new Intent(v.getContext(), BeginnerActivity.class);
-                else
+                    v.getContext().startActivity(intent);
+                }
+                else if(i==2 && i<=current_level-1) {
                     intent = new Intent(v.getContext(), BeginnerActivity.class);
-                v.getContext().startActivity(intent);
+                    v.getContext().startActivity(intent);
+                }
+
             }
         });
     }

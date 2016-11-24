@@ -14,9 +14,10 @@ import java.util.List;
 
 public class OneFragment extends Fragment {
     private List<TutorialLevel> levels;
+    private int current_level;
+    public OneFragment()
+    {
 
-    public OneFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -31,10 +32,13 @@ public class OneFragment extends Fragment {
 
         RecyclerView rv= (RecyclerView) rootView.findViewById(R.id.rv);
         rv.setHasFixedSize(true);
+        Bundle data = getArguments();
+
+        current_level = data.getInt("current_level");
 
         initializeData();
 
-        RVAdapter adapter = new RVAdapter(levels);
+        RVAdapter adapter = new RVAdapter(levels,current_level);
         rv.setAdapter(adapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -45,8 +49,23 @@ public class OneFragment extends Fragment {
 
     private void initializeData(){
         levels = new ArrayList<>();
-        levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
-        levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
-        levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_person_white_48dp));
+        if(current_level == 1)
+        {
+            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_https_white_48dp));
+            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_https_white_48dp));
+        }
+        else if(current_level == 2)
+        {
+            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_https_white_48dp));
+        }
+        else
+        {
+            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_person_white_48dp));
+        }
     }
 }

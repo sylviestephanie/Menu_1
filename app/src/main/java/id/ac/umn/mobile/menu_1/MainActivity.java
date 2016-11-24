@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
             super(fm);
             this.mNumOfTabs = NumOfTabs;
         }
+        SharedPreferences pref = getSharedPreferences("LOGIN_DATA",MODE_PRIVATE); //utk di activity ini sendiri
+        int current_level = Integer.parseInt(pref.getString("level","0"));
 
         @Override
         public Fragment getItem(int position) {
@@ -95,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     OneFragment tab0 = new OneFragment();
+                    SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+                    int curr = Integer.parseInt(pref.getString("CURRENT_LEVEL","0"));
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("current_level",curr);
+                    tab0.setArguments(bundle);
                     return tab0;
                 case 1:
                     TwoFragment tab1 = new TwoFragment();
