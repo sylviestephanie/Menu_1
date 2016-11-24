@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class Splashscreen extends AppCompatActivity {
+public class Splashscreen extends AppCompatActivity implements Animation.AnimationListener {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -30,6 +30,7 @@ public class Splashscreen extends AppCompatActivity {
     private void StartAnimations() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
+        anim.setAnimationListener(this);
         LinearLayout l = (LinearLayout) findViewById(R.id.lin_lay);
         l.clearAnimation();
         l.startAnimation(anim);
@@ -40,28 +41,21 @@ public class Splashscreen extends AppCompatActivity {
         iv.clearAnimation();
         iv.startAnimation(anim);
 
-        splashThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    int waited = 0;
+    }
 
-                    //splash screen pause time
-                    while (waited < 3500) {
-                        sleep(100);
-                        waited += 100;
-                    }
-                    Intent intent = new Intent(Splashscreen.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent);
-                    Splashscreen.this.finish();
-                } catch (InterruptedException e) {
+    @Override
+    public void onAnimationStart(Animation animation) {
 
-                }
-                super.run();
-            }
-        };
+    }
 
-        splashThread.start();
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        Intent intent = new Intent(Splashscreen.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }
