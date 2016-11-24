@@ -1,16 +1,21 @@
 package id.ac.umn.mobile.menu_1;
 
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -28,10 +33,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         final EditText username = (EditText) findViewById(R.id.username_txt);
         final EditText password = (EditText) findViewById(R.id.password_txt);
         final CheckBox rememberMeCheck = (CheckBox) findViewById(R.id.remember_me);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Button login = (Button) findViewById(R.id.login_btn);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +72,19 @@ public class LoginActivity extends AppCompatActivity {
         username.setText(pref.getString("USERNAME",""));
         password.setText(pref.getString("PASSWORD",""));
         rememberMeCheck.setChecked(pref.getBoolean("REMEMBER_ME", false));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+        if(!pref.getString("USERNAME", "").equals("")) {
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(i);
+        }
     }
 
     class Verification extends AsyncTask<String, Void, ArrayList<HashMap<String,String>>>
@@ -141,12 +160,30 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 prefData.putBoolean("REMEMBER_ME", remember);
                 prefData.commit();
-
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(i);
+                finish();
             }
             else
             {
-                Toast.makeText(LoginActivity.this,"Error", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                builder1.setMessage("Username and Password Invalid");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
             }
         }
     }
