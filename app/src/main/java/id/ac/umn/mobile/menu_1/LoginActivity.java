@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             String formParam = strings[0];
             WebService webService = new WebService("http://learnit-database.000webhostapp.com/login.php","POST", formParam);
             String jsonString = webService.responseBody;
-
+            
             ArrayList<HashMap<String, String>> result = new ArrayList<>();
             try
             {
