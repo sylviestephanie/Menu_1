@@ -9,5 +9,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="id.ac.umn.mobile.menu_1.CourseActivity">
+<<<<<<< HEAD
 
+=======
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"/>
+>>>>>>> origin/master
 </RelativeLayout>

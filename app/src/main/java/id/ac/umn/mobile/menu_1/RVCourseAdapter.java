@@ -1,14 +1,14 @@
 package id.ac.umn.mobile.menu_1;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
         TextView cardTitle;
         TextView cardDesc;
         ImageView cardImage;
-
+        Button btnView;
         CourseViewHolder(View itemView) {
             super(itemView);
             cvBeginner = (CardView)itemView.findViewById(R.id.cv_beginner);
@@ -35,6 +35,7 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
             cardTitle = (TextView)itemView.findViewById(R.id.card_title);
             cardDesc = (TextView)itemView.findViewById(R.id.card_desc);
             cardImage = (ImageView)itemView.findViewById(R.id.card_image);
+            btnView=(Button)itemView.findViewById(R.id.action_button);
         }
     }
 
@@ -46,11 +47,20 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
     }
 
     @Override
-    public void onBindViewHolder(CourseViewHolder cardViewHolder, final int i) {
+    public void onBindViewHolder(final CourseViewHolder cardViewHolder, final int i) {
 
         cardViewHolder.cardTitle.setText(courses.get(i).title);
         cardViewHolder.cardDesc.setText(courses.get(i).desc);
         cardViewHolder.cardImage.setImageResource(courses.get(i).image);
+        cardViewHolder.btnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cardViewHolder.cardDesc.setText("read");
+                Intent intent=new Intent(view.getContext(),CourseActivity.class);
+                intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
+                view.getContext().startActivity(intent);
+            }
+        });
 
         cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
