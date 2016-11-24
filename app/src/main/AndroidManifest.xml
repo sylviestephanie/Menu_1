@@ -32,8 +32,9 @@
         <activity android:name=".BeginnerActivity" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AboutActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".CourseActivity"></activity>
     </application>
 
 </manifest>
