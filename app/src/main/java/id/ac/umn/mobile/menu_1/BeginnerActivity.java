@@ -5,6 +5,8 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -17,8 +19,13 @@ import android.widget.ListView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class BeginnerActivity extends AppCompatActivity implements AbsListView.OnScrollListener{
+
+    private List<TutorialCourse> courses;
 
     final static String[] DUMMY_DATA = {
             "France",
@@ -52,7 +59,18 @@ public class BeginnerActivity extends AppCompatActivity implements AbsListView.O
 
         mFab = (FloatingActionButton)findViewById(R.id.favorite);
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
-        ListView listView = (ListView)findViewById(R.id.listview);
+        //ListView listView = (ListView)findViewById(R.id.listview);
+
+        RecyclerView rv= (RecyclerView)findViewById(R.id.rv_beginner);
+        rv.setHasFixedSize(true);
+
+        initializeData();
+
+        RVCourseAdapter adapter = new RVCourseAdapter(courses);
+        rv.setAdapter(adapter);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
 
         if (toolbar != null) {
             toolbar.setTitle("Beginner");
@@ -63,21 +81,29 @@ public class BeginnerActivity extends AppCompatActivity implements AbsListView.O
 
         // Inflate the header view and attach it to the ListView
         View headerView = LayoutInflater.from(this)
-                .inflate(R.layout.beginner_details, listView, false);
+                .inflate(R.layout.beginner_details, rv, false);
         ContainerHeader = headerView.findViewById(R.id.container);
-        listView.addHeaderView(headerView);
+        //listView.addHeaderView(headerView);
 
         // prepare the fade in/out animator
         fade =  ObjectAnimator.ofFloat(ContainerHeader, "alpha", 0f, 1f);
         fade.setInterpolator(new DecelerateInterpolator());
         fade.setDuration(400);
 
-        listView.setOnScrollListener(this);
+        /*listView.setOnScrollListener(this);
         listView.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                DUMMY_DATA));
+                DUMMY_DATA));*/
 
     }
+
+    private void initializeData() {
+        courses = new ArrayList<>();
+        courses.add(new TutorialCourse("Course 1", "desc", R.drawable.blue_1));
+        courses.add(new TutorialCourse("Course 2", "desc", R.drawable.blue_1));
+        courses.add(new TutorialCourse("Course 3", "desc", R.drawable.blue_1));
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

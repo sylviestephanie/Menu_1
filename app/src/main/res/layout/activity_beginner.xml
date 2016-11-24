@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".BeginnerActivity">
+    tools:context=".BeginnerActivity"
+    android:background="@color/backgroundDark">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_beginner"
@@ -15,11 +16,18 @@
         android:background="?attr/colorPrimary"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <ListView
+    <!---<ListView
         android:id="@+id/listview"
         android:layout_below="@+id/toolbar_beginner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/toolbar_beginner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv_beginner"
+        />
 
 
     <com.getbase.floatingactionbutton.FloatingActionButton
