@@ -93,19 +93,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+            String name = pref.getString("USERNAME", "0");
+            int curr = Integer.parseInt(pref.getString("CURRENT_LEVEL","0"));
 
             switch (position) {
                 case 0:
                     OneFragment tab0 = new OneFragment();
-                    SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
-                    int curr = Integer.parseInt(pref.getString("CURRENT_LEVEL","0"));
-
                     Bundle bundle = new Bundle();
                     bundle.putInt("current_level",curr);
                     tab0.setArguments(bundle);
                     return tab0;
                 case 1:
                     TwoFragment tab1 = new TwoFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("username", name);
+                    bundle1.putInt("current_level",curr);
+                    tab1.setArguments(bundle1);
                     return tab1;
                 case 2:
                     ThreeFragment tab2 = new ThreeFragment();
