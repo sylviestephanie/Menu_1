@@ -31,9 +31,9 @@ public class SoalFragment extends Fragment {
     private int qid = 0;
     private int score = 0;
     private int course;
-    private Question current_q;
+    //private Question current_q;
     private Bundle data;
-    private ArrayList<Question> arr;
+    /*private ArrayList<Question> arr;*/
     TextView soal, timer;
     RadioButton a;
     RadioButton b;
@@ -48,7 +48,7 @@ public class SoalFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //new GetQuestion().execute();
        /* Bundle data = this.getArguments();
         course = Integer.toString(data.getInt("course"));*/
     }
@@ -62,66 +62,25 @@ public class SoalFragment extends Fragment {
         data = getArguments();
         course = data.getInt("course");
         Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();
+        new GetQuestion().execute();
         return rootView;
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-
+        new GetQuestion().execute();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        new GetQuestion().execute();
-        current_q = arr.get(qid);
+        //new GetQuestion().execute();
 
-        soal = (TextView) getActivity().findViewById(R.id.question);
-        timer = (TextView) getActivity().findViewById(R.id.timer);
-        a = (RadioButton) getActivity().findViewById(R.id.opt_a);
-        b = (RadioButton) getActivity().findViewById(R.id.opt_b);
-        c = (RadioButton) getActivity().findViewById(R.id.opt_c);
-        final RadioGroup group = (RadioGroup) getActivity().findViewById(R.id.ans_group);
-        next = (Button) getActivity().findViewById(R.id.next);
-
-        setQuestion();
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(group.getCheckedRadioButtonId() != -1) {
-                    RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
-                    if (current_q.getANSWER().equals(answer.getText().toString())) {
-                        score++;
-                        Log.d("score", "Your score" + score);
-                        Toast.makeText(view.getContext(), "correct", Toast.LENGTH_LONG);
-                    }
-
-                    if (qid < 5) {
-                        current_q = arr.get(qid);
-                        setQuestion();
-                    } else {
-                        Toast.makeText(getActivity(), "aa", Toast.LENGTH_LONG);
-                    }
-                }
-            }
-        });
-
-        new CountDownTimer(30000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                timer.setText("seconds remaining: " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                timer.setText("done!");
-            }
-        }.start();
 
     }
 
-    private void setQuestion()
+    private void setQuestion(Question current_q)
     {
         soal.setText(current_q.getQUESTION());
         a.setText(current_q.getOPTA());
@@ -132,7 +91,7 @@ public class SoalFragment extends Fragment {
 
     class GetQuestion extends AsyncTask<Void,Void,ArrayList<Question>> {
         ProgressDialog progressDialog;
-
+        Question current_q;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -148,7 +107,8 @@ public class SoalFragment extends Fragment {
 
             WebService webService = new WebService("http://learnit-database.000webhostapp.com/all_question.php?course="+course,"GET", "");
             String jsonString = webService.responseBody;
-            ArrayList<Question> arrQ = new ArrayList<>();
+            Log.d("result", jsonString);
+            ArrayList<Question> arr = new ArrayList<>();
             try
             {
                 JSONArray jsonArray = new JSONArray(jsonString);
@@ -162,21 +122,66 @@ public class SoalFragment extends Fragment {
                             questObj.getString("opt_c"),
                             questObj.getString("answer"));
 
-                    arrQ.add(q);
+                    arr.add(q);
                 }
             }
             catch (JSONException e)
             {
                 e.printStackTrace();
             }
-            return arrQ;
+            Log.d("size","size " + arr.size());
+            return arr;
         }
 
         @Override
         protected void onPostExecute(final ArrayList<Question> questions) {
             super.onPostExecute(questions);
             progressDialog.hide();
-            arr = questions;
+            Log.d("q_size","q " + questions.size());
+            current_q = questions.get(qid);
+
+            soal = (TextView) getActivity().findViewById(R.id.question);
+            timer = (TextView) getActivity().findViewById(R.id.timer);
+            a = (RadioButton) getActivity().findViewById(R.id.opt_a);
+            b = (RadioButton) getActivity().findViewById(R.id.opt_b);
+            c = (RadioButton) getActivity().findViewById(R.id.opt_c);
+            final RadioGroup group = (RadioGroup) getActivity().findViewById(R.id.ans_group);
+            next = (Button) getActivity().findViewById(R.id.next);
+
+            setQuestion(current_q);
+
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(group.getCheckedRadioButtonId() != -1) {
+                        RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
+                        if (current_q.getANSWER().equals(answer.getText().toString())) {
+                            score++;
+                            Log.d("score", "Your score" + score);
+                            Toast.makeText(view.getContext(), "correct", Toast.LENGTH_LONG);
+                        }
+
+                        if (qid < 5) {
+                            current_q = questions.get(qid);
+                            setQuestion(current_q);
+                        } else {
+                            Toast.makeText(getActivity(), "aa", Toast.LENGTH_LONG);
+                        }
+                    }
+                }
+            });
+
+            new CountDownTimer(30000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+                }
+
+                public void onFinish() {
+                    timer.setText("done!");
+                }
+            }.start();
+            //arr = questions;
         }
     }
 
