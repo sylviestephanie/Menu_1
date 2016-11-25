@@ -7,10 +7,11 @@ public class TutorialCourse {
     String title;
     String desc;
     int image;
-
-    TutorialCourse(String title, String desc, int image) {
+    int flag;
+    TutorialCourse(String title, String desc, int image, int flag) {
         this.title = title;
         this.desc = desc;
         this.image = image;
+        this.flag = flag;
     }
 }

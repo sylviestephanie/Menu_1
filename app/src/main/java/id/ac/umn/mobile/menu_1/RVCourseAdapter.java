@@ -1,5 +1,6 @@
 package id.ac.umn.mobile.menu_1;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,6 +53,7 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
         cardViewHolder.cardTitle.setText(courses.get(i).title);
         cardViewHolder.cardDesc.setText(courses.get(i).desc);
         cardViewHolder.cardImage.setImageResource(courses.get(i).image);
+        if(courses.get(i).flag == 1) cardViewHolder.btnView.setText("View");
         cardViewHolder.btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,9 +68,6 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
             @Override
             public void onClick(View view) {
                 Intent intent;
-
-                /*Bundle data = new Bundle();
-                data.putInt("course",i+1);*/
                 intent = new Intent(view.getContext(), PreTestActivity.class);
                 intent.putExtra("course", i+1);
                 view.getContext().startActivity(intent);

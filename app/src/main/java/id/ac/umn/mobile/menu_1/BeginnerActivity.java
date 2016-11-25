@@ -2,6 +2,9 @@ package id.ac.umn.mobile.menu_1;
 
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +20,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -45,7 +55,9 @@ public class BeginnerActivity extends AppCompatActivity implements AbsListView.O
             "Brazil",
             "Japan"
     };
-
+    private String username="";
+    private int level;
+    int flag1,flag2,flag3;
     Toolbar toolbar;
     View ContainerHeader;
     FloatingActionButton mFab;
@@ -56,6 +68,7 @@ public class BeginnerActivity extends AppCompatActivity implements AbsListView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
+        new GetFlag().execute();
 
         mFab = (FloatingActionButton)findViewById(R.id.favorite);
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
@@ -89,7 +102,7 @@ public class BeginnerActivity extends AppCompatActivity implements AbsListView.O
         fade =  ObjectAnimator.ofFloat(ContainerHeader, "alpha", 0f, 1f);
         fade.setInterpolator(new DecelerateInterpolator());
         fade.setDuration(400);
-
+        Toast.makeText(BeginnerActivity.this, username, Toast.LENGTH_LONG);
         /*listView.setOnScrollListener(this);
         listView.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
@@ -99,9 +112,9 @@ public class BeginnerActivity extends AppCompatActivity implements AbsListView.O
 
     private void initializeData() {
         courses = new ArrayList<>();
-        courses.add(new TutorialCourse("Course 1", "desc", R.drawable.blue_1));
-        courses.add(new TutorialCourse("Course 2", "desc", R.drawable.blue_1));
-        courses.add(new TutorialCourse("Course 3", "desc", R.drawable.blue_1));
+        courses.add(new TutorialCourse("Course 1", "desc", R.drawable.blue_1,flag1));
+        courses.add(new TutorialCourse("Course 2", "desc", R.drawable.blue_1,flag2));
+        courses.add(new TutorialCourse("Course 3", "desc", R.drawable.blue_1,flag3));
     }
 
 
@@ -196,5 +209,62 @@ public class BeginnerActivity extends AppCompatActivity implements AbsListView.O
      */
     public static boolean isLollipop() {
         return android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
+    class GetFlag extends AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>
+    {
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(BeginnerActivity.this);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
+        }
+
+        @Override
+        protected ArrayList<HashMap<String, String>> doInBackground(Void... voids) {
+            SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+            username = pref.getString("USERNAME", "");
+            Log.d("user", username);
+            WebService webService = new WebService("http://learnit-database.000webhostapp.com/flag_test.php?username="+username+"&type=1&id=1","GET", "");
+            String jsonString = webService.responseBody;
+            ArrayList<HashMap<String,String>> arr = new ArrayList<>();
+            try{
+                JSONObject obj =new JSONObject(jsonString);
+                int code = obj.getInt("success");
+                String flag1 = obj.getString("flag_1");
+                String flag2 = obj.getString("flag_2");
+                String flag3 = obj.getString("flag_3");
+
+                HashMap<String, String> res = new HashMap<>();
+                res.put("success", Integer.toString(code));
+                res.put("flag1", flag1);
+                res.put("flag2", flag2);
+                res.put("flag3", flag3);
+                arr.add(res);
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
+            return arr;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
+            super.onPostExecute(hashMaps);
+            progressDialog.dismiss();
+            if(hashMaps.get(0).get("success").equals("1"))
+            {
+                flag1 = Integer.parseInt(hashMaps.get(0).get("flag1"));
+                flag2 = Integer.parseInt(hashMaps.get(0).get("flag2"));
+                flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
+            }
+        }
     }
 }

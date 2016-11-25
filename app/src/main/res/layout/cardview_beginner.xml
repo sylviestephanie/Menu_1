@@ -50,7 +50,7 @@
             android:layout_below="@+id/card_desc"
             style="?android:attr/borderlessButtonStyle"
             android:textColor="?attr/colorPrimary"
-            android:text="View" />
+            android:text="Take Pre-Test" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>
 
