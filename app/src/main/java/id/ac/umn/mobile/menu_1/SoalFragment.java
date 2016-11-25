@@ -1,11 +1,18 @@
 package id.ac.umn.mobile.menu_1;
 
 
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.Exchanger;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -33,12 +42,13 @@ public class SoalFragment extends Fragment {
     private int course;
     //private Question current_q;
     private Bundle data;
-    /*private ArrayList<Question> arr;*/
+    private ArrayList<Question> arrQ;
     TextView soal, timer;
     RadioButton a;
     RadioButton b;
     RadioButton c;
     Button next;
+    private String username="";
 
     public SoalFragment() {
         // Required empty public constructor
@@ -61,23 +71,23 @@ public class SoalFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_soal, container, false);
         data = getArguments();
         course = data.getInt("course");
+        username = data.getString("username");
         Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();
         new GetQuestion().execute();
+
         return rootView;
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+
         new GetQuestion().execute();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        //new GetQuestion().execute();
-
-
     }
 
     private void setQuestion(Question current_q)
@@ -137,6 +147,7 @@ public class SoalFragment extends Fragment {
         protected void onPostExecute(final ArrayList<Question> questions) {
             super.onPostExecute(questions);
             progressDialog.hide();
+            arrQ = questions;
             Log.d("q_size","q " + questions.size());
             current_q = questions.get(qid);
 
@@ -153,21 +164,38 @@ public class SoalFragment extends Fragment {
             next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(group.getCheckedRadioButtonId() != -1) {
-                        RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
-                        if (current_q.getANSWER().equals(answer.getText().toString())) {
-                            score++;
-                            Log.d("score", "Your score" + score);
-                            Toast.makeText(view.getContext(), "correct", Toast.LENGTH_LONG);
-                        }
+                    if(next.getText().toString().equals("NEXT")) {
+                        if (a.isChecked() || b.isChecked() || c.isChecked()) {
+                            RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
+                            if (current_q.getANSWER().equals(answer.getText().toString())) {
+                                score++;
+                                Log.d("score", "Your score" + score);
+                                Toast.makeText(view.getContext(), "correct", Toast.LENGTH_LONG);
+                            }
 
-                        if (qid < 5) {
-                            current_q = questions.get(qid);
-                            setQuestion(current_q);
-                        } else {
-                            Toast.makeText(getActivity(), "aa", Toast.LENGTH_LONG);
+                            if (qid < 5) {
+                                if (qid == 4) next.setText("Submit");
+                                current_q = questions.get(qid);
+                                setQuestion(current_q);
+                            }
+                            a.setChecked(false);
+                            b.setChecked(false);
+                            c.setChecked(false);
                         }
                     }
+                    else
+                    {
+                        if (group.getCheckedRadioButtonId() != -1) {
+                            RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
+                            if (current_q.getANSWER().equals(answer.getText().toString())) {
+                                score++;
+                                Log.d("score", "Your score" + score);
+                                Log.d("score", "submitted");
+                            }
+                            new SaveScore().execute();
+                        }
+                    }
+
                 }
             });
 
@@ -178,11 +206,62 @@ public class SoalFragment extends Fragment {
                 }
 
                 public void onFinish() {
-                    timer.setText("done!");
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+                    builder1.setTitle("TIME'S UP");
+                    builder1.setMessage("Your Score : " + getArguments().getInt("score"));
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    new SaveScore().execute();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                    /*timer.setText("done!");*/
                 }
             }.start();
             //arr = questions;
         }
     }
+
+    class SaveScore extends AsyncTask<Void, Void, Void>
+    {
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Loading...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            /*WebService webService = new WebService("http://learnit-database.000webhostapp.com/update_score.php?username="+username+"&score="+score,"GET", "");
+            String jsonString = webService.responseBody;*/
+            WebService webService = new WebService("http://learnit-database.000webhostapp.com/update_flag.php?username="+username+"&type=1&id="+course+"&score="+score,"GET", "");
+            String jsonString = webService.responseBody;
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressDialog.dismiss();
+            FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
+            PretestResultFragment resultFragment = new PretestResultFragment();
+            data.putInt("score",score);
+            resultFragment.setArguments(data);
+            fragmentTransaction.replace(android.R.id.content, resultFragment);
+            fragmentTransaction.commit();
+        }
+    }
+
 
 }

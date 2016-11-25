@@ -61,11 +61,13 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
                     Intent intent = new Intent(view.getContext(), CourseActivity.class);
                     intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
                     view.getContext().startActivity(intent);
+
                 }
                 else
                 {
                     Intent intent;
                     intent = new Intent(view.getContext(), PreTestActivity.class);
+                    intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
                     intent.putExtra("course", i+1);
                     view.getContext().startActivity(intent);
                 }

@@ -43,30 +43,6 @@ public class BeginnerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
         new GetFlag().execute();
-
-        mFab = (FloatingActionButton)findViewById(R.id.favorite);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
-
-        RecyclerView rv= (RecyclerView)findViewById(R.id.rv_beginner);
-        rv.setHasFixedSize(true);
-
-        initializeData();
-
-        RVCourseAdapter adapter = new RVCourseAdapter(courses);
-        rv.setAdapter(adapter);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
-
-        //new getCourse().execute(); still error
-
-        if (toolbar != null) {
-            toolbar.setTitle("Beginner");
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
     }
 
     private void initializeData() {
@@ -148,6 +124,28 @@ public class BeginnerActivity extends AppCompatActivity {
                 flag1 = Integer.parseInt(hashMaps.get(0).get("flag1"));
                 flag2 = Integer.parseInt(hashMaps.get(0).get("flag2"));
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
+            }
+            mFab = (FloatingActionButton)findViewById(R.id.favorite);
+            toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
+
+            RecyclerView rv= (RecyclerView)findViewById(R.id.rv_beginner);
+            rv.setHasFixedSize(true);
+
+            initializeData();
+
+            RVCourseAdapter adapter = new RVCourseAdapter(courses);
+            rv.setAdapter(adapter);
+
+            LinearLayoutManager llm = new LinearLayoutManager(BeginnerActivity.this);
+            rv.setLayoutManager(llm);
+
+            //new getCourse().execute(); still error
+
+            if (toolbar != null) {
+                toolbar.setTitle("Beginner");
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
             }
         }
     }
