@@ -3,6 +3,7 @@ package id.ac.umn.mobile.menu_1;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +17,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ThreeFragment extends Fragment {
     private List<Leaderboard> leaderboardList;
     private View rootView;
+    private Fragment self;
+    private RVLeaderboardAdapter adapter;
+    private RecyclerView rv;
+    private RecyclerView.LayoutManager layoutManager;
 
     public ThreeFragment() {
         // Required empty public constructor
@@ -29,6 +37,7 @@ public class ThreeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // new GetAllScore().execute();
     }
 
     @Override
@@ -36,15 +45,27 @@ public class ThreeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_three, container, false);
-        new GetAllScore().execute();
+
+        rv= (RecyclerView) rootView.findViewById(R.id.rv);
+        rv.setHasFixedSize(true);
+
+        initializeData();
+
+        adapter = new RVLeaderboardAdapter(leaderboardList);
+        rv.setAdapter(adapter);
 
 
+        layoutManager = new LinearLayoutManager(getActivity());
+
+        rv.setLayoutManager(layoutManager);
+        self = this;
         return rootView;
     }
 
     private void initializeData()
     {
-
+        leaderboardList = new ArrayList<>();
+        leaderboardList.add(new Leaderboard("vannia","100","1"));
     }
 
     class GetAllScore extends AsyncTask<Void, Void, ArrayList<Leaderboard>>
@@ -64,18 +85,13 @@ public class ThreeFragment extends Fragment {
         protected void onPostExecute(ArrayList<Leaderboard> leaderboards) {
 
             super.onPostExecute(leaderboards);
+
             progressDialog.dismiss();
             leaderboardList = leaderboards;
-            RecyclerView rv= (RecyclerView) rootView.findViewById(R.id.rv);
-            rv.setHasFixedSize(true);
-
-            initializeData();
-
-            RVLeaderboardAdapter adapter = new RVLeaderboardAdapter(leaderboardList);
+            adapter = new RVLeaderboardAdapter(leaderboardList);
+            adapter.notifyDataSetChanged();
             rv.setAdapter(adapter);
-
-            LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-            rv.setLayoutManager(llm);
+            rv.invalidate();
 
         }
 
