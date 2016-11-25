@@ -43,11 +43,18 @@ public class SoalFragment extends Fragment {
     //private Question current_q;
     private Bundle data;
     private ArrayList<Question> arrQ;
+    boolean startTimer = true;
     TextView soal, timer;
     RadioButton a;
     RadioButton b;
     RadioButton c;
     Button next;
+    CountDownTimer countDownTimer;
+    boolean times_up = false;
+    boolean submitted = false;
+    final static long INTERVAL=1000;
+    final static long TIMEOUT=10000;
+
     private String username="";
 
     public SoalFragment() {
@@ -192,21 +199,30 @@ public class SoalFragment extends Fragment {
                                 Log.d("score", "Your score" + score);
                                 Log.d("score", "submitted");
                             }
-                            new SaveScore().execute();
+
+                            submitted = true;
+                            FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
+                            PretestResultFragment resultFragment = new PretestResultFragment();
+                            data.putInt("score",score);
+                            resultFragment.setArguments(data);
+                            fragmentTransaction.replace(android.R.id.content, resultFragment);
+                            fragmentTransaction.commit();
                         }
                     }
 
                 }
             });
 
-            new CountDownTimer(30000, 1000) {
+            countDownTimer = new CountDownTimer(30000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
+                    if(!submitted)
                     timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+                    else cancel();
                 }
 
                 public void onFinish() {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+                    final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
                     builder1.setTitle("TIME'S UP");
                     builder1.setMessage("Your Score : " + getArguments().getInt("score"));
                     builder1.setCancelable(true);
@@ -215,53 +231,22 @@ public class SoalFragment extends Fragment {
                             "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    new SaveScore().execute();
+//                                    new SaveScore().execute();
+                                    dialog.dismiss();
+                                    FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
+                                    PretestResultFragment resultFragment = new PretestResultFragment();
+                                    data.putInt("score",score);
+                                    resultFragment.setArguments(data);
+                                    fragmentTransaction.replace(android.R.id.content, resultFragment);
+                                    fragmentTransaction.commit();
                                 }
                             });
 
                     AlertDialog alert11 = builder1.create();
-                    alert11.show();
-                    /*timer.setText("done!");*/
+
+                    if(times_up == false) {alert11.show(); times_up = true;}
                 }
             }.start();
-            //arr = questions;
         }
     }
-
-    class SaveScore extends AsyncTask<Void, Void, Void>
-    {
-        ProgressDialog progressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Loading...");
-            progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            /*WebService webService = new WebService("http://learnit-database.000webhostapp.com/update_score.php?username="+username+"&score="+score,"GET", "");
-            String jsonString = webService.responseBody;*/
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/update_flag.php?username="+username+"&type=1&id="+course+"&score="+score,"GET", "");
-            String jsonString = webService.responseBody;
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressDialog.dismiss();
-            FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
-            PretestResultFragment resultFragment = new PretestResultFragment();
-            data.putInt("score",score);
-            resultFragment.setArguments(data);
-            fragmentTransaction.replace(android.R.id.content, resultFragment);
-            fragmentTransaction.commit();
-        }
-    }
-
-
 }

@@ -102,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         protected ArrayList<HashMap<String,String>> doInBackground(String... strings) {
             String formParam = strings[0];
             WebService webService = new WebService("http://learnit-database.000webhostapp.com/login.php","POST", formParam);
+
             String jsonString = webService.responseBody;
             
             ArrayList<HashMap<String, String>> result = new ArrayList<>();
@@ -133,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
             super.onPostExecute(hashMaps);
-            progressDialog.hide();
+            progressDialog.dismiss();
             //Toast.makeText(LoginActivity.this,hashMaps.get(0).get("body"), Toast.LENGTH_SHORT).show();
             if(hashMaps.get(0).get("success").equals("1"))
             {

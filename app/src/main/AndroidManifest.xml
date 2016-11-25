@@ -29,7 +29,7 @@
         </activity>
         <activity android:name=".BeginnerActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".PreTestActivity" />
+        <activity android:name=".PreTestActivity" android:screenOrientation="portrait"/>
         <activity android:name=".CourseActivity" />
         <activity android:name=".AboutActivity"/>
     </application>
