@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,6 +17,7 @@ import java.util.List;
  */
 public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.CourseViewHolder>{
     private List<TutorialCourse> courses;
+
 
     RVCourseAdapter(List<TutorialCourse> courses){
         this.courses = courses;
@@ -49,8 +49,7 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
 
     @Override
     public void onBindViewHolder(final CourseViewHolder cardViewHolder, final int i) {
-
-        cardViewHolder.cardTitle.setText(courses.get(i).title);
+       cardViewHolder.cardTitle.setText(courses.get(i).title);
         cardViewHolder.cardDesc.setText(courses.get(i).desc);
         cardViewHolder.cardImage.setImageResource(courses.get(i).image);
         if(courses.get(i).flag == 1) cardViewHolder.btnView.setText("View");
