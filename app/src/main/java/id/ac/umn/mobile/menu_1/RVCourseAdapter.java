@@ -57,14 +57,23 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
         cardViewHolder.btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cardViewHolder.cardDesc.setText("read");
-                Intent intent=new Intent(view.getContext(),CourseActivity.class);
-                intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
-                view.getContext().startActivity(intent);
+                if(cardViewHolder.btnView.getText().toString().equals("View")) {
+                    cardViewHolder.cardDesc.setText("read");
+                    Intent intent = new Intent(view.getContext(), CourseActivity.class);
+                    intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
+                    view.getContext().startActivity(intent);
+                }
+                else
+                {
+                    Intent intent;
+                    intent = new Intent(view.getContext(), PreTestActivity.class);
+                    intent.putExtra("course", i+1);
+                    view.getContext().startActivity(intent);
+                }
             }
         });
 
-        cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        /*cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent;
@@ -72,7 +81,7 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
                 intent.putExtra("course", i+1);
                 view.getContext().startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
