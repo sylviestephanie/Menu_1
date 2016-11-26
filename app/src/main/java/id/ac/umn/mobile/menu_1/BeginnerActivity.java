@@ -34,7 +34,7 @@ public class BeginnerActivity extends AppCompatActivity {
     Toolbar toolbar;
     View ContainerHeader;
     FloatingActionButton mFab;
-    public static String[] course, desc;
+
 
     ObjectAnimator fade;
 
@@ -42,21 +42,14 @@ public class BeginnerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
+        level = getIntent().getIntExtra("LVL", 0);
         new GetFlag().execute();
     }
 
     private void initializeData() {
-        courses = new ArrayList<>();
-        courses.add(new TutorialCourse("Course 1", "desc", R.drawable.blue_1,flag1));
-        courses.add(new TutorialCourse("Course 2", "desc", R.drawable.blue_1,flag2));
-        courses.add(new TutorialCourse("Course 3", "desc", R.drawable.blue_1,flag3));
-
-        /*for(int i =0; i<course.length; i++){
-            TutorialCourse item = new TutorialCourse();
-            item.setTitle(course[i]);
-            item.setDesc(desc[i]);
-            courses.add(item);
-        }*/
+        courses.get(0).setFlag(flag1);
+        courses.get(1).setFlag(flag2);
+        courses.get(2).setFlag(flag3);
     }
 
 
@@ -89,7 +82,7 @@ public class BeginnerActivity extends AppCompatActivity {
             SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
             username = pref.getString("USERNAME", "");
             Log.d("user", username);
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/flag_test.php?username="+username+"&type=1&id=1","GET", "");
+            WebService webService = new WebService("http://learnit-database.000webhostapp.com/flag_test.php?username="+username+"&type=1&id="+level,"GET", "");
             String jsonString = webService.responseBody;
             ArrayList<HashMap<String,String>> arr = new ArrayList<>();
             try{
@@ -109,6 +102,24 @@ public class BeginnerActivity extends AppCompatActivity {
             }
             catch (JSONException e)
             {
+                e.printStackTrace();
+            }
+            WebService service = new WebService("http://learnit-database.000webhostapp.com/course.php?level="+level, "GET", "");
+            jsonString = service.responseBody;
+            try {
+                JSONArray courseArray = new JSONArray(jsonString);
+                courses = new ArrayList<>();
+                for (int i = 0; i < courseArray.length(); i++) {
+                    JSONObject courseObject = courseArray.getJSONObject(i);
+                    TutorialCourse c = new TutorialCourse();
+                    c.setTitle(courseObject.getString("title"));
+                    c.setDesc(courseObject.getString("description"));
+                    int imageid = getResources().getIdentifier(courseObject.getString("image"), "drawable", "id.ac.umn.mobile.menu_1");
+                    c.setImage(imageid);
+                    courses.add(c);
+                }
+            }
+            catch (JSONException e){
                 e.printStackTrace();
             }
 
@@ -150,41 +161,4 @@ public class BeginnerActivity extends AppCompatActivity {
         }
     }
 
-    class getCourse extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(BeginnerActivity.this);
-            progressDialog.setMessage("Loading...");
-            progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(true);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            WebService service = new WebService("http://learnit-database.000webhostapp.com/course.php?level=1", "GET", "");
-            String jsonString = service.responseBody;
-            try {
-                JSONArray courseArray = new JSONArray(jsonString);
-                for (int i = 0; i < courseArray.length(); i++) {
-                    JSONObject courseObject = courseArray.getJSONObject(i);
-                    course[i] = courseObject.getString("title");
-                    desc[i] = courseObject.getString("description");
-                }
-            }
-            catch (JSONException e){
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void s) {
-            super.onPostExecute(s);
-            progressDialog.dismiss();
-            initializeData();
-        }
-    }
 }

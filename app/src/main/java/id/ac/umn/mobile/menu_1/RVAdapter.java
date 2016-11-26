@@ -66,14 +66,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.LevelViewHolder>{
                 Intent intent;
                 if(i == 0 && i<=current_level-1) {
                     intent = new Intent(v.getContext(), BeginnerActivity.class);
+                    intent.putExtra("LVL",1);
                     v.getContext().startActivity(intent);
                 }
                 else if(i == 1 && i<=current_level-1) {
                     intent = new Intent(v.getContext(), BeginnerActivity.class);
+                    intent.putExtra("LVL", 2);
                     v.getContext().startActivity(intent);
                 }
                 else if(i==2 && i<=current_level-1) {
                     intent = new Intent(v.getContext(), BeginnerActivity.class);
+                    intent.putExtra("LVL", 3);
                     v.getContext().startActivity(intent);
                 }
 

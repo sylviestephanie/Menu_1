@@ -41,4 +41,13 @@ public class TutorialCourse {
     public void setImage(int image) {
         this.image = image;
     }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
 }
