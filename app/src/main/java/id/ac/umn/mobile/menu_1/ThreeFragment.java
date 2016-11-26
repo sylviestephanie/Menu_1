@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,15 +26,14 @@ import java.util.ListIterator;
 public class ThreeFragment extends Fragment {
     private List<Leaderboard> leaderboardList;
     private RecyclerView rv;
+    private LinearLayout layout;
 
-    public ThreeFragment() {
-        // Required empty public constructor
-    }
+
+    public ThreeFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // new GetAllScore().execute();
     }
 
     @Override
@@ -42,11 +42,13 @@ public class ThreeFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_three, container, false);
 
-        rv= (RecyclerView) rootView.findViewById(R.id.rv);
+        rv= (RecyclerView) rootView.findViewById(R.id.rv_leaderboard);
         rv.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
+
+        layout  = (LinearLayout) rootView.findViewById(R.id.progressbar_view_leaderboard);
 
         new GetAllScore().execute();
 
@@ -56,36 +58,26 @@ public class ThreeFragment extends Fragment {
 
     class GetAllScore extends AsyncTask<Void, Void, ArrayList<Leaderboard>>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Loading...");
-            progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            layout.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(ArrayList<Leaderboard> leaderboards) {
 
             super.onPostExecute(leaderboards);
-
-            progressDialog.dismiss();
+            layout.setVisibility(View.GONE);
             leaderboardList = leaderboards;
             RVLeaderboardAdapter adapter = new RVLeaderboardAdapter(leaderboardList);
-            adapter.notifyDataSetChanged();
             rv.setAdapter(adapter);
-            rv.invalidate();
-
         }
 
         @Override
         protected ArrayList<Leaderboard> doInBackground(Void... voids) {
             WebService webService = new WebService("http://learnit-database.000webhostapp.com/get_all_scores.php","GET", "");
             String jsonString = webService.responseBody;
-            //Log.d("result", jsonString);
             ArrayList<Leaderboard> arr = new ArrayList<>();
             try
             {
@@ -104,9 +96,7 @@ public class ThreeFragment extends Fragment {
             {
                 e.printStackTrace();
             }
-            Log.d("size","size " + arr.size());
             return arr;
         }
     }
-
 }

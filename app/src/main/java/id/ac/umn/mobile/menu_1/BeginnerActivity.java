@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -32,17 +33,22 @@ public class BeginnerActivity extends AppCompatActivity {
     private int level;
     int flag1,flag2,flag3;
     Toolbar toolbar;
-    View ContainerHeader;
     FloatingActionButton mFab;
-
-
-    ObjectAnimator fade;
+    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
+        if (toolbar != null) {
+            toolbar.setTitle("Beginner");
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         level = getIntent().getIntExtra("LVL", 0);
+        layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         new GetFlag().execute();
     }
 
@@ -66,15 +72,10 @@ public class BeginnerActivity extends AppCompatActivity {
 
     class GetFlag extends AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(BeginnerActivity.this);
-            progressDialog.setMessage("Loading...");
-            progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            layout.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -129,7 +130,7 @@ public class BeginnerActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
             super.onPostExecute(hashMaps);
-            progressDialog.dismiss();
+            layout.setVisibility(View.GONE);
             if(hashMaps.get(0).get("success").equals("1"))
             {
                 flag1 = Integer.parseInt(hashMaps.get(0).get("flag1"));
@@ -137,27 +138,17 @@ public class BeginnerActivity extends AppCompatActivity {
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
             }
             mFab = (FloatingActionButton)findViewById(R.id.favorite);
-            toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
 
             RecyclerView rv= (RecyclerView)findViewById(R.id.rv_beginner);
             rv.setHasFixedSize(true);
 
-            initializeData();
+            initializeData(); //initialize flag (hardcode)
 
             RVCourseAdapter adapter = new RVCourseAdapter(courses);
             rv.setAdapter(adapter);
 
             LinearLayoutManager llm = new LinearLayoutManager(BeginnerActivity.this);
             rv.setLayoutManager(llm);
-
-            //new getCourse().execute(); still error
-
-            if (toolbar != null) {
-                toolbar.setTitle("Beginner");
-                setSupportActionBar(toolbar);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setDisplayShowHomeEnabled(true);
-            }
         }
     }
 
