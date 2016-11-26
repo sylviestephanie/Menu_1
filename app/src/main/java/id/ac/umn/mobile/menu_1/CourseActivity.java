@@ -49,8 +49,8 @@ public class CourseActivity extends AppCompatActivity {
         if (toolbar != null) {
             toolbar.setTitle(title);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         new GetFlag().execute();
         postTest = (Button) findViewById(R.id.post_test);
@@ -63,6 +63,7 @@ public class CourseActivity extends AppCompatActivity {
                 intent.putExtra("course", getIntent().getIntExtra("course",1));
                 intent.putExtra("level", getIntent().getIntExtra("level",1));
                 view.getContext().startActivity(intent);
+                finish();
             }
         });
 
@@ -117,9 +118,9 @@ public class CourseActivity extends AppCompatActivity {
                 flag2 = Integer.parseInt(hashMaps.get(0).get("flag2"));
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
             }
-            if(course == 1 && flag1 == 1) postTest.setVisibility(View.VISIBLE);
-            if(course == 2 && flag2 == 1) postTest.setVisibility(View.VISIBLE);
-            if(course == 3 && flag3 == 1) postTest.setVisibility(View.VISIBLE);
+            if(course == 1 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
+            if(course == 2 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
+            if(course == 3 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
 
         }
     }

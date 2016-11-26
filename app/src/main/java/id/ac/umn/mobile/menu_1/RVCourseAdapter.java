@@ -75,15 +75,6 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
             }
         });
 
-        /*cardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent;
-                intent = new Intent(view.getContext(), PreTestActivity.class);
-                intent.putExtra("course", i+1);
-                view.getContext().startActivity(intent);
-            }
-        });*/
     }
 
     @Override
