@@ -8,14 +8,16 @@ public class TutorialCourse {
     String desc;
     int image;
     int flag;
+    int level;
 
     TutorialCourse(){}
 
-    TutorialCourse(String title, String desc, int image, int flag) {
+    TutorialCourse(String title, String desc, int image, int flag, int level) {
         this.title = title;
         this.desc = desc;
         this.image = image;
         this.flag = flag;
+        this.level = level;
     }
 
     public String getTitle() {
@@ -48,6 +50,14 @@ public class TutorialCourse {
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
 }

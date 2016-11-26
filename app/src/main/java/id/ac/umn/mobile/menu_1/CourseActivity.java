@@ -28,21 +28,23 @@ import java.util.HashMap;
 public class CourseActivity extends AppCompatActivity {
 
     private String username="";
-    private int level;
+    private int level,course;
     int flag1,flag2,flag3;
     Toolbar toolbar;
     FloatingActionButton mFab;
     private LinearLayout layout;
+    Button postTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-
+        layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         String title = getIntent().getStringExtra("TITLE");
         TextView tvTitle=(TextView)findViewById(R.id.title);
         tvTitle.setText(title);
-
+        level = getIntent().getIntExtra("level",1);
+        course = getIntent().getIntExtra("course",1);
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
         if (toolbar != null) {
             toolbar.setTitle(title);
@@ -51,7 +53,7 @@ public class CourseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
         new GetFlag().execute();
-        Button postTest = (Button) findViewById(R.id.post_test);
+        postTest = (Button) findViewById(R.id.post_test);
         postTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,9 +61,11 @@ public class CourseActivity extends AppCompatActivity {
                 intent = new Intent(view.getContext(), PostTestActivity.class);
                 intent.putExtra("TITLE", getIntent().getStringExtra("TITLE"));
                 intent.putExtra("course", getIntent().getIntExtra("course",1));
+                intent.putExtra("level", getIntent().getIntExtra("level",1));
                 view.getContext().startActivity(intent);
             }
         });
+
 
     }
     class GetFlag extends AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>
@@ -113,8 +117,9 @@ public class CourseActivity extends AppCompatActivity {
                 flag2 = Integer.parseInt(hashMaps.get(0).get("flag2"));
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
             }
-
-
+            if(course == 1 && flag1 == 1) postTest.setVisibility(View.GONE);
+            if(course == 2 && flag2 == 2) postTest.setVisibility(View.GONE);
+            if(course == 3 && flag3 == 3) postTest.setVisibility(View.GONE);
 
         }
     }

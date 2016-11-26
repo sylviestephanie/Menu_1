@@ -119,6 +119,7 @@ public class BeginnerActivity extends AppCompatActivity {
                     c.setDesc(courseObject.getString("description"));
                     int imageid = getResources().getIdentifier(courseObject.getString("image"), "drawable", "id.ac.umn.mobile.menu_1");
                     c.setImage(imageid);
+                    c.setLevel(level);
                     courses.add(c);
                 }
             }
