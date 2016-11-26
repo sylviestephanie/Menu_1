@@ -60,6 +60,7 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
                     cardViewHolder.cardDesc.setText("read");
                     Intent intent = new Intent(view.getContext(), CourseActivity.class);
                     intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
+                    intent.putExtra("course", i+1);
                     view.getContext().startActivity(intent);
 
                 }
