@@ -37,7 +37,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="#FFFFFF"
-        android:text="Take Post Test"/>
+        android:text="Take Post Test"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="match_parent"

@@ -81,7 +81,7 @@ public class CourseActivity extends AppCompatActivity {
             SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
             username = pref.getString("USERNAME", "");
             Log.d("user", username);
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/flag_test.php?username="+username+"&type=1&id="+level,"GET", "");
+            WebService webService = new WebService("http://learnit-database.000webhostapp.com/flag_test.php?username="+username+"&type=2&id="+level,"GET", "");
             String jsonString = webService.responseBody;
             ArrayList<HashMap<String,String>> arr = new ArrayList<>();
             try{
@@ -117,9 +117,9 @@ public class CourseActivity extends AppCompatActivity {
                 flag2 = Integer.parseInt(hashMaps.get(0).get("flag2"));
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
             }
-            if(course == 1 && flag1 == 1) postTest.setVisibility(View.GONE);
-            if(course == 2 && flag2 == 2) postTest.setVisibility(View.GONE);
-            if(course == 3 && flag3 == 3) postTest.setVisibility(View.GONE);
+            if(course == 1 && flag1 == 1) postTest.setVisibility(View.VISIBLE);
+            if(course == 2 && flag2 == 1) postTest.setVisibility(View.VISIBLE);
+            if(course == 3 && flag3 == 1) postTest.setVisibility(View.VISIBLE);
 
         }
     }

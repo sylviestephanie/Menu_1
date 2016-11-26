@@ -213,7 +213,7 @@ public class SoalPostFragment extends Fragment {
 
                             submitted = true;
                             FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
-                            PretestResultFragment resultFragment = new PretestResultFragment();
+                            PosttestResultFragment resultFragment = new PosttestResultFragment();
                             data.putInt("score",score);
                             resultFragment.setArguments(data);
                             fragmentTransaction.replace(android.R.id.content, resultFragment);

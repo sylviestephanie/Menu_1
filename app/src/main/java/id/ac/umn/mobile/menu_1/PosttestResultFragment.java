@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class PosttestResultFragment extends Fragment {
 
-    private int score,course;
+    private int score,course,level;
     private String username;
     private Bundle data;
     public PosttestResultFragment() {
@@ -35,6 +35,7 @@ public class PosttestResultFragment extends Fragment {
         score = getArguments().getInt("score");
         course = data.getInt("course");
         username = data.getString("username");
+        level = data.getInt("level");
         new SaveScore().execute();
         return rootView;
     }
@@ -48,10 +49,10 @@ public class PosttestResultFragment extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), BeginnerActivity.class);
+            intent.putExtra("LVL",level );
+            startActivity(intent);
             getActivity().finish();
-               /* Intent intent = new Intent(view.getContext(), CourseActivity.class);
-                intent.putExtra("TITLE", getArguments().getString("title"));
-                view.getContext().startActivity(intent);*/
             }
         });
     }

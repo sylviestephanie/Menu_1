@@ -34,6 +34,7 @@ public class PostTestActivity extends AppCompatActivity {
         data.putInt("course",course);
         data.putString("username",username);
         data.putString("title", title);
+        data.putInt("level", getIntent().getIntExtra("level",0));
         fragment.setArguments(data);
         fragmentTransaction.replace(android.R.id.content, fragment);
 
