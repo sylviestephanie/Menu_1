@@ -7,18 +7,28 @@ import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 public class PreTestActivity extends AppCompatActivity{
 
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_pre_test);
+        setContentView(R.layout.activity_pre_test);
         int course = getIntent().getIntExtra("course",1);
         String title = getIntent().getStringExtra("TITLE");
         Log.d("course", "coure:"+course);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
+        if (toolbar != null) {
+            toolbar.setTitle("Pretest");
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
         //Toast.makeText(PreTestActivity.this, Integer.toString(course), Toast.LENGTH_LONG);
 
         FragmentManager fragmentManager = getFragmentManager();

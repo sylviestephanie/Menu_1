@@ -14,6 +14,7 @@ import android.app.Fragment;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,23 @@ public class SoalFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        /*getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        Log.d("back","pressed");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });*/
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -89,7 +107,7 @@ public class SoalFragment extends Fragment {
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        new GetQuestion().execute();
+        //new GetQuestion().execute();
     }
 
     @Override
@@ -155,7 +173,7 @@ public class SoalFragment extends Fragment {
             super.onPostExecute(questions);
             progressDialog.hide();
             arrQ = questions;
-            Log.d("q_size","q " + questions.size());
+            Log.d("qid","q " + qid);
             current_q = questions.get(qid);
 
             soal = (TextView) getActivity().findViewById(R.id.question);
@@ -175,13 +193,13 @@ public class SoalFragment extends Fragment {
                         if (a.isChecked() || b.isChecked() || c.isChecked()) {
                             RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
                             if (current_q.getANSWER().equals(answer.getText().toString())) {
-                                score++;
+                                score+=10;
                                 Log.d("score", "Your score" + score);
                                 Toast.makeText(view.getContext(), "correct", Toast.LENGTH_LONG);
                             }
 
-                            if (qid < 5) {
-                                if (qid == 4) next.setText("Submit");
+                            if (qid < 3) {
+                                if (qid == 2) next.setText("Submit");
                                 current_q = questions.get(qid);
                                 setQuestion(current_q);
                             }
@@ -195,7 +213,7 @@ public class SoalFragment extends Fragment {
                         if (group.getCheckedRadioButtonId() != -1) {
                             RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
                             if (current_q.getANSWER().equals(answer.getText().toString())) {
-                                score++;
+                                score+=10;
                                 Log.d("score", "Your score" + score);
                                 Log.d("score", "submitted");
                             }
@@ -217,7 +235,7 @@ public class SoalFragment extends Fragment {
 
                 public void onTick(long millisUntilFinished) {
                     if(!submitted)
-                    timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+                    timer.setText(millisUntilFinished / 1000 + " s");
                     else cancel();
                 }
 
@@ -248,5 +266,7 @@ public class SoalFragment extends Fragment {
                 }
             }.start();
         }
+
+
     }
 }

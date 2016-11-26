@@ -3,43 +3,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginTop="100dp"
     tools:context="id.ac.umn.mobile.menu_1.SoalFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:id="@+id/timer"/>
+        android:text="Time Remaining"
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:textSize="40dp"
+        android:fontFamily="sans-serif-thin"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="30 s"
+        android:id="@+id/timer"
+        android:background="@drawable/circle_bg"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/darker_gray"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/question"
-        android:text="QUESTION"/>
+        android:text="QUESTION"
+        android:textSize="20dp"/>
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/ans_group">
 
         <RadioButton
             android:id="@+id/opt_a"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
         <RadioButton
             android:id="@+id/opt_b"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
         <RadioButton
             android:id="@+id/opt_c"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
     </RadioGroup>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/next"
-        android:text="NEXT"/>
+        android:text="NEXT"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="#FFFFFF"/>
 
 </LinearLayout>
