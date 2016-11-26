@@ -73,7 +73,7 @@ public class BeginnerActivity extends AppCompatActivity {
             progressDialog = new ProgressDialog(BeginnerActivity.this);
             progressDialog.setMessage("Loading...");
             progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(true);
+            progressDialog.setCancelable(false);
             progressDialog.show();
         }
 

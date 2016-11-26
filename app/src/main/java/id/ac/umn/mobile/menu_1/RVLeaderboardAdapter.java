@@ -2,6 +2,7 @@ package id.ac.umn.mobile.menu_1;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,20 +43,17 @@ public class RVLeaderboardAdapter extends RecyclerView.Adapter<RVLeaderboardAdap
     }
 
     @Override
-    public void onBindViewHolder(LeaderboardViewHolder holder, final int i) {
-        holder.icon_entry.setText(i);
+    public void onBindViewHolder(final LeaderboardViewHolder holder, final int i) {
+        holder.icon_entry.setText(Integer.toString(i+1));
         holder.name_entry.setText(leaderboards.get(i).getUsername());
         holder.score.setText(leaderboards.get(i).getScore());
-        if(leaderboards.get(i).getCurrent_level().equals("1"))
-        {
-            holder.level_entry.setText("Beginner");
-        }
+        if(leaderboards.get(i).getCurrent_level().equals("1")) { holder.level_entry.setText("Beginner"); }
         else if (leaderboards.get(i).getCurrent_level().equals("2")) holder.level_entry.setText("Intermediate");
         else holder.level_entry.setText("Advance");
     }
 
     @Override
-    public LeaderboardViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public LeaderboardViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_leaderboard, viewGroup, false);
         LeaderboardViewHolder lvh = new LeaderboardViewHolder(v);
         return lvh;
@@ -63,7 +61,7 @@ public class RVLeaderboardAdapter extends RecyclerView.Adapter<RVLeaderboardAdap
 
     @Override
     public int getItemCount() {
-        return 0;
+        return leaderboards.size();
     }
 
 

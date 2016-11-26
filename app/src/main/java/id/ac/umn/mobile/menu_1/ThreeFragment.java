@@ -24,11 +24,7 @@ import java.util.ListIterator;
 
 public class ThreeFragment extends Fragment {
     private List<Leaderboard> leaderboardList;
-    private View rootView;
-    private Fragment self;
-    private RVLeaderboardAdapter adapter;
     private RecyclerView rv;
-    private RecyclerView.LayoutManager layoutManager;
 
     public ThreeFragment() {
         // Required empty public constructor
@@ -44,29 +40,19 @@ public class ThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_three, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_three, container, false);
 
         rv= (RecyclerView) rootView.findViewById(R.id.rv);
         rv.setHasFixedSize(true);
 
-        initializeData();
-
-        adapter = new RVLeaderboardAdapter(leaderboardList);
-        rv.setAdapter(adapter);
-
-
-        layoutManager = new LinearLayoutManager(getActivity());
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        self = this;
+
+        new GetAllScore().execute();
+
         return rootView;
     }
 
-    private void initializeData()
-    {
-        leaderboardList = new ArrayList<>();
-        leaderboardList.add(new Leaderboard("vannia","100","1"));
-    }
 
     class GetAllScore extends AsyncTask<Void, Void, ArrayList<Leaderboard>>
     {
@@ -88,7 +74,7 @@ public class ThreeFragment extends Fragment {
 
             progressDialog.dismiss();
             leaderboardList = leaderboards;
-            adapter = new RVLeaderboardAdapter(leaderboardList);
+            RVLeaderboardAdapter adapter = new RVLeaderboardAdapter(leaderboardList);
             adapter.notifyDataSetChanged();
             rv.setAdapter(adapter);
             rv.invalidate();
