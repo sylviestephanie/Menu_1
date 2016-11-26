@@ -41,13 +41,15 @@ public class BeginnerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginner);
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
+        level = getIntent().getIntExtra("LVL", 0);
         if (toolbar != null) {
-            toolbar.setTitle("Beginner");
+            if(level==1) toolbar.setTitle("Beginner");
+            else if(level == 2) toolbar.setTitle("Intermediate");
+            else toolbar.setTitle("Advanced");
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        level = getIntent().getIntExtra("LVL", 0);
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         new GetFlag().execute();
     }
