@@ -125,8 +125,10 @@ public class TwoFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            WebService webService = new WebService("https://learnit-database.000webhostapp.com/get_user_details.php?username="+username,"GET", "");
+            WebService webService = new WebService("http://learnit-database.esy.es/get_user_details.php?username="+username,"GET", "");
+//            WebService webService = new WebService("https://10.0.2.2/android/get_user_details.php?username="+username,"GET", "");
             String jsonString = webService.responseBody;
+            Log.d("result", jsonString);
             try
             {
                 JSONArray profileArray = new JSONArray(jsonString);

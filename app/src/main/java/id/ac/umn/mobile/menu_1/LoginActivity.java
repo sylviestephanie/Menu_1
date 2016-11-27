@@ -101,8 +101,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected ArrayList<HashMap<String,String>> doInBackground(String... strings) {
             String formParam = strings[0];
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/login.php","POST", formParam);
-
+            WebService webService = new WebService("http://learnit-database.esy.es/login.php","POST", formParam);
+//            WebService webService = new WebService("http://10.0.2.2/android/login.php","POST", formParam);
             String jsonString = webService.responseBody;
             
             ArrayList<HashMap<String, String>> result = new ArrayList<>();

@@ -76,7 +76,8 @@ public class ThreeFragment extends Fragment {
 
         @Override
         protected ArrayList<Leaderboard> doInBackground(Void... voids) {
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/get_all_scores.php","GET", "");
+            WebService webService = new WebService("http://learnit-database.esy.es/get_all_scores.php","GET", "");
+//            WebService webService = new WebService("http://10.0.2.2/android/get_all_scores.php","GET", "");
             String jsonString = webService.responseBody;
             ArrayList<Leaderboard> arr = new ArrayList<>();
             try

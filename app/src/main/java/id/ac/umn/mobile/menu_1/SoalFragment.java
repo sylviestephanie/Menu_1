@@ -140,7 +140,8 @@ public class SoalFragment extends Fragment {
         @Override
         protected ArrayList<Question> doInBackground(Void... strings) {
 
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/all_question.php?course="+course+"&type=1","GET", "");
+            WebService webService = new WebService("http://learnit-database.esy.es/all_question.php?course="+course+"&type=1","GET", "");
+//            WebService webService = new WebService("http://10.0.2.2/android/all_question.php?course="+course+"&type=1","GET", "");
             String jsonString = webService.responseBody;
             Log.d("result", jsonString);
             ArrayList<Question> arr = new ArrayList<>();

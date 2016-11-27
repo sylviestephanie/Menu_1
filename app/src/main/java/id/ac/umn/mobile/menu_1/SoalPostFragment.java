@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -46,8 +47,7 @@ public class SoalPostFragment extends Fragment {
     CountDownTimer countDownTimer;
     boolean times_up = false;
     boolean submitted = false;
-    final static long INTERVAL=1000;
-    final static long TIMEOUT=10000;
+    private LinearLayout layout;
 
     private String username="";
 
@@ -87,6 +87,7 @@ public class SoalPostFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_soal_post, container, false);
+
         data = getArguments();
         course = data.getInt("course");
         username = data.getString("username");
@@ -106,6 +107,7 @@ public class SoalPostFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        //layout  = (LinearLayout) getActivity().findViewById(R.id.progressbar_view);
     }
 
     private void setQuestion(Question current_q)
@@ -128,12 +130,14 @@ public class SoalPostFragment extends Fragment {
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(true);
             progressDialog.show();
+            //layout.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected ArrayList<Question> doInBackground(Void... strings) {
 
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/all_question.php?course="+course+"&type=2","GET", "");
+            WebService webService = new WebService("http://learnit-database.esy.es/all_question.php?course="+course+"&type=2","GET", "");
+//            WebService webService = new WebService("http://10.0.2.2/android/all_question.php?course="+course+"&type=2","GET", "");
             String jsonString = webService.responseBody;
             Log.d("result", jsonString);
             ArrayList<Question> arr = new ArrayList<>();
@@ -165,6 +169,7 @@ public class SoalPostFragment extends Fragment {
         protected void onPostExecute(final ArrayList<Question> questions) {
             super.onPostExecute(questions);
             progressDialog.hide();
+            //layout.setVisibility(View.GONE);
             arrQ = questions;
             Log.d("qid","q " + qid);
             current_q = questions.get(qid);

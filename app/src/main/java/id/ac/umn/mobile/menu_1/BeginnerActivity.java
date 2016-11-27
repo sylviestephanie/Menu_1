@@ -85,7 +85,8 @@ public class BeginnerActivity extends AppCompatActivity {
             SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
             username = pref.getString("USERNAME", "");
             Log.d("user", username);
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/flag_test.php?username="+username+"&type=1&id="+level,"GET", "");
+            WebService webService = new WebService("http://learnit-database.esy.es/flag_test.php?username="+username+"&type=1&id="+level,"GET", "");
+//            WebService webService = new WebService("http://10.0.2.2/android/flag_test.php?username="+username+"&type=1&id="+level,"GET", "");
             String jsonString = webService.responseBody;
             ArrayList<HashMap<String,String>> arr = new ArrayList<>();
             try{

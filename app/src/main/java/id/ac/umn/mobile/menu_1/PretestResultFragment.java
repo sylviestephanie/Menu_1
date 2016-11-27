@@ -72,9 +72,9 @@ public class PretestResultFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            /*WebService webService = new WebService("http://learnit-database.000webhostapp.com/update_score.php?username="+username+"&score="+score,"GET", "");
-            String jsonString = webService.responseBody;*/
-            WebService webService = new WebService("http://learnit-database.000webhostapp.com/update_flag.php?username="+username+"&type=1&id="+course+"&score="+score,"GET", "");
+
+            WebService webService = new WebService("http://learnit-database.esy.es/update_flag.php?username="+username+"&type=1&id="+course+"&score="+score,"GET", "");
+//            WebService webService = new WebService("http://10.0.2.2/android/update_flag.php?username="+username+"&type=1&id="+course+"&score="+score,"GET", "");
             String jsonString = webService.responseBody;
             return null;
         }

@@ -42,10 +42,6 @@ public class PostTestInfoFragment extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(getActivity(), BeginnerActivity.class);
-                intent.putExtra("LVL",1);
-                startActivity(intent);*/
-                //getActivity().finish();
                 FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
                 SoalPostFragment fragment = new SoalPostFragment();
                 fragment.setArguments(data);
