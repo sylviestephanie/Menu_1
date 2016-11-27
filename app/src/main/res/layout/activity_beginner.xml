@@ -33,10 +33,23 @@
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/toolbar_beginner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv_beginner"
-        />
+        android:layout_height="440dp"
+        android:id="@+id/rv_beginner"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rv_beginner">
+        <Button
+            android:id="@+id/test"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/rv_beginner"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:text="TAKE LEVEL TEST"/>
+    </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -53,4 +66,5 @@
         fab:fab_colorNormal="@color/accent"
         fab:fab_size="mini"
         />
+
 </RelativeLayout>
