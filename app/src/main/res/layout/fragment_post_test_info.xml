@@ -16,7 +16,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Post test sesudah masuk ke course 1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="You'll undergo a course test\nOnce you start, you can't cancel it."
         android:textAlignment="center"/>
     <Button
         android:id="@+id/start"
@@ -26,4 +30,12 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="#FFFFFF"/>
+    <Button
+        android:id="@+id/cancel"
+        android:text="CANCEL"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="#000000"/>
 </LinearLayout>

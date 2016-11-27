@@ -58,16 +58,19 @@
             android:id="@+id/opt_a"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
             android:textSize="20dp"/>
         <RadioButton
             android:id="@+id/opt_b"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
             android:textSize="20dp"/>
         <RadioButton
             android:id="@+id/opt_c"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
             android:textSize="20dp"/>
     </RadioGroup>
 

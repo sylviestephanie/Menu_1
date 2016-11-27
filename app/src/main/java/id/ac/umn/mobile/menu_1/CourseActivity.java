@@ -45,6 +45,7 @@ public class CourseActivity extends AppCompatActivity {
         tvTitle.setText(title);
         level = getIntent().getIntExtra("level",1);
         course = getIntent().getIntExtra("course",1);
+        Log.d("couesinactivity", Integer.toString(course));
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
         if (toolbar != null) {
             toolbar.setTitle(title);
@@ -60,7 +61,7 @@ public class CourseActivity extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(view.getContext(), PostTestActivity.class);
                 intent.putExtra("TITLE", getIntent().getStringExtra("TITLE"));
-                intent.putExtra("course", getIntent().getIntExtra("course",1));
+                intent.putExtra("course", course);
                 intent.putExtra("level", getIntent().getIntExtra("level",1));
                 view.getContext().startActivity(intent);
                 finish();
@@ -119,10 +120,22 @@ public class CourseActivity extends AppCompatActivity {
                 flag2 = Integer.parseInt(hashMaps.get(0).get("flag2"));
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
             }
-            if(course == 1 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
-            if(course == 2 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
-            if(course == 3 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
-
+            if(level == 1) {
+                if (course == 1 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 2 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 3 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
+            }
+            else if(level == 2)
+            {
+                if (course == 4 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 5 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 6 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
+            }
+            else{
+                if (course == 7 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 8 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 9 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

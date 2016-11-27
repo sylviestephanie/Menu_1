@@ -1,7 +1,9 @@
 package id.ac.umn.mobile.menu_1;
 
+import android.animation.IntArrayEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -34,10 +37,11 @@ public class BeginnerActivity extends AppCompatActivity {
     private String username="";
     private int level;
     int flag1,flag2,flag3;
+    int flagpost1, flagpost2, flagpost3, flag_level_test1,flag_level_test2,flag_level_test3;
     Toolbar toolbar;
     FloatingActionButton mFab;
     Button testLevel;
-    private LinearLayout layout;
+    private LinearLayout layout, layout_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +58,19 @@ public class BeginnerActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
+        layout_button = (LinearLayout) findViewById(R.id.ll_button);
         new GetFlag().execute();
 
         testLevel = (Button) findViewById(R.id.test);
-        testLevel.setVisibility(View.GONE);
+        layout_button.setVisibility(View.GONE);
         testLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent;
+                intent = new Intent(view.getContext(), LevelTestActivity.class);
+                intent.putExtra("level", level);
+                view.getContext().startActivity(intent);
+                finish();
             }
         });
 
@@ -121,6 +130,35 @@ public class BeginnerActivity extends AppCompatActivity {
             {
                 e.printStackTrace();
             }
+
+            webService = new WebService("http://learnit-database.esy.es/flag_test.php?username="+username+"&type=2&id="+level,"GET", "");
+            jsonString = webService.responseBody;
+            try{
+                JSONObject obj =new JSONObject(jsonString);
+                int code = obj.getInt("success");
+                flagpost1 = Integer.parseInt(obj.getString("flag_1"));
+                flagpost2 = Integer.parseInt(obj.getString("flag_2"));
+                flagpost3 = Integer.parseInt(obj.getString("flag_3"));
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            webService = new WebService("http://learnit-database.esy.es/flag_test.php?username="+username+"&type=3&id="+level,"GET", "");
+            jsonString = webService.responseBody;
+            try{
+                JSONObject obj =new JSONObject(jsonString);
+                int code = obj.getInt("success");
+                flag_level_test1 = Integer.parseInt(obj.getString("flag_1"));
+                /*flag_level_test2 = Integer.parseInt(obj.getString("flag_2"));
+                flag_level_test3 = Integer.parseInt(obj.getString("flag_3"));*/
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
             WebService service = new WebService("http://learnit-database.esy.es/course.php?level="+level, "GET", "");
             jsonString = service.responseBody;
             try {
@@ -148,7 +186,7 @@ public class BeginnerActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
             super.onPostExecute(hashMaps);
             layout.setVisibility(View.GONE);
-            testLevel.setVisibility(View.VISIBLE);
+
             if(hashMaps.get(0).get("success").equals("1"))
             {
                 flag1 = Integer.parseInt(hashMaps.get(0).get("flag1"));
@@ -167,6 +205,31 @@ public class BeginnerActivity extends AppCompatActivity {
 
             LinearLayoutManager llm = new LinearLayoutManager(BeginnerActivity.this);
             rv.setLayoutManager(llm);
+
+            if(flag1 == 1 && flag2 == 1 && flag3 == 1 && flagpost1 == 1 && flagpost2 == 1 && flagpost3==1 && flag_level_test1  !=1) {
+                layout_button.setVisibility(View.VISIBLE);
+                ViewGroup.LayoutParams l = rv.getLayoutParams();
+                l.height = getResources().getDimensionPixelSize(R.dimen.rv);
+                rv.setLayoutParams(l);
+                /*if(level == 1 && flag_level_test1  !=1) {
+                    layout_button.setVisibility(View.VISIBLE);
+                    ViewGroup.LayoutParams l = rv.getLayoutParams();
+                    l.height = getResources().getDimensionPixelSize(R.dimen.rv);
+                    rv.setLayoutParams(l);
+                }
+                else if(level == 2 && flag_level_test2  !=1) {
+                    layout_button.setVisibility(View.VISIBLE);
+                    ViewGroup.LayoutParams l = rv.getLayoutParams();
+                    l.height = getResources().getDimensionPixelSize(R.dimen.rv);
+                    rv.setLayoutParams(l);
+                }
+                else if(level == 3 && flag_level_test3  !=1) {
+                    layout_button.setVisibility(View.VISIBLE);
+                    ViewGroup.LayoutParams l = rv.getLayoutParams();
+                    l.height = getResources().getDimensionPixelSize(R.dimen.rv);
+                    rv.setLayoutParams(l);
+                }*/
+            }
         }
     }
 

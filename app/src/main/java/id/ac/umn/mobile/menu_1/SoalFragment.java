@@ -243,7 +243,7 @@ public class SoalFragment extends Fragment {
                 public void onFinish() {
                     final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
                     builder1.setTitle("TIME'S UP");
-                    builder1.setMessage("Your Score : " + getArguments().getInt("score"));
+                    builder1.setMessage("Your Score : " + score);
                     builder1.setCancelable(true);
 
                     builder1.setPositiveButton(

@@ -1,20 +1,19 @@
 package id.ac.umn.mobile.menu_1;
 
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -30,11 +29,10 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SoalPostFragment extends Fragment {
-
+public class SoalLevelFragment extends Fragment {
     private int qid = 0;
     private int score = 0;
-    private int course;
+    private int level;
     //private Question current_q;
     private Bundle data;
     private ArrayList<Question> arrQ;
@@ -47,50 +45,26 @@ public class SoalPostFragment extends Fragment {
     CountDownTimer countDownTimer;
     boolean times_up = false;
     boolean submitted = false;
-    private LinearLayout layout;
-
     private String username="";
 
-    public SoalPostFragment() {
+    public SoalLevelFragment() {
         // Required empty public constructor
-
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        View rootView = inflater.inflate(R.layout.fragment_soal_post, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_soal_level, container, false);
 
         data = getArguments();
-        course = data.getInt("course");
+        level = data.getInt("level");
         username = data.getString("username");
-        Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();
+
         new GetQuestion().execute();
 
         return rootView;
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     private void setQuestion(Question current_q)
@@ -119,7 +93,7 @@ public class SoalPostFragment extends Fragment {
         @Override
         protected ArrayList<Question> doInBackground(Void... strings) {
 
-            WebService webService = new WebService("http://learnit-database.esy.es/all_question.php?course="+course+"&type=2","GET", "");
+            WebService webService = new WebService("http://learnit-database.esy.es/all_question.php?course="+level+"&type=3","GET", "");
 //            WebService webService = new WebService("http://10.0.2.2/android/all_question.php?course="+course+"&type=2","GET", "");
             String jsonString = webService.responseBody;
             Log.d("result", jsonString);
@@ -174,13 +148,12 @@ public class SoalPostFragment extends Fragment {
                         if (a.isChecked() || b.isChecked() || c.isChecked()) {
                             RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
                             if (current_q.getANSWER().equals(answer.getText().toString())) {
-                                score+=10;
+                                score+=20;
                                 Log.d("score", "Your score" + score);
-                                Toast.makeText(view.getContext(), "correct", Toast.LENGTH_LONG);
                             }
 
-                            if (qid < 3) {
-                                if (qid == 2) next.setText("Submit");
+                            if (qid < 5) {
+                                if (qid == 4) next.setText("Submit");
                                 current_q = questions.get(qid);
                                 setQuestion(current_q);
                             }
@@ -194,14 +167,14 @@ public class SoalPostFragment extends Fragment {
                         if (group.getCheckedRadioButtonId() != -1) {
                             RadioButton answer = (RadioButton) getActivity().findViewById(group.getCheckedRadioButtonId());
                             if (current_q.getANSWER().equals(answer.getText().toString())) {
-                                score+=10;
+                                score+=20;
                                 Log.d("score", "Your score" + score);
                                 Log.d("score", "submitted");
                             }
 
                             submitted = true;
                             FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
-                            PosttestResultFragment resultFragment = new PosttestResultFragment();
+                            LevelTestResultFragment resultFragment = new LevelTestResultFragment();
                             data.putInt("score",score);
                             resultFragment.setArguments(data);
                             fragmentTransaction.replace(android.R.id.content, resultFragment);
@@ -216,7 +189,7 @@ public class SoalPostFragment extends Fragment {
 
                 public void onTick(long millisUntilFinished) {
                     if(!submitted)
-                    timer.setText(millisUntilFinished / 1000 + " s");
+                        timer.setText(millisUntilFinished / 1000 + " s");
                     else cancel();
                 }
 
@@ -233,7 +206,7 @@ public class SoalPostFragment extends Fragment {
 //                                    new SaveScore().execute();
                                     dialog.dismiss();
                                     FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction();
-                                    PosttestResultFragment resultFragment = new PosttestResultFragment();
+                                    LevelTestResultFragment resultFragment = new LevelTestResultFragment();
                                     data.putInt("score",score);
                                     resultFragment.setArguments(data);
                                     fragmentTransaction.replace(android.R.id.content, resultFragment);

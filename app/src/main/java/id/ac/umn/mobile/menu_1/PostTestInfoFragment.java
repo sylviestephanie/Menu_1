@@ -17,6 +17,8 @@ import android.widget.Button;
 public class PostTestInfoFragment extends Fragment {
 
     private Bundle data;
+    private int level,course;
+    private String title;
 
     public PostTestInfoFragment() {
         // Required empty public constructor
@@ -29,6 +31,9 @@ public class PostTestInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_post_test_info, container, false);
         data = getArguments();
+        level = data.getInt("level");
+        course = data.getInt("course");
+        title =  data.getString("title");
         /*Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();*/
         return rootview;
     }
@@ -47,6 +52,20 @@ public class PostTestInfoFragment extends Fragment {
                 fragment.setArguments(data);
                 fragmentTransaction.replace(android.R.id.content, fragment);
                 fragmentTransaction.commit();
+            }
+        });
+
+        Button cancel = (Button) getView().findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(view.getContext(), CourseActivity.class);
+                intent.putExtra("TITLE", title);
+                intent.putExtra("course", course);
+                intent.putExtra("level", level);
+                view.getContext().startActivity(intent);
+                getActivity().finish();
             }
         });
     }

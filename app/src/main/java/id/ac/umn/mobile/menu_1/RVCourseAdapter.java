@@ -60,7 +60,17 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
                     cardViewHolder.cardDesc.setText("read");
                     Intent intent = new Intent(view.getContext(), CourseActivity.class);
                     intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
-                    intent.putExtra("course", i+1);
+                    int c = 0;
+                    if(courses.get(i).getLevel() == 1)
+                    {
+                        c=i+1;
+                    }
+                    else if(courses.get(i).getLevel() == 2)
+                    {
+                        c = i+4;
+                    }
+                    else c=i+7;
+                    intent.putExtra("course", c);
                     intent.putExtra("level", courses.get(i).getLevel());
                     view.getContext().startActivity(intent);
                 }
@@ -70,6 +80,7 @@ public class RVCourseAdapter extends RecyclerView.Adapter<RVCourseAdapter.Course
                     intent = new Intent(view.getContext(), PreTestActivity.class);
                     intent.putExtra("TITLE", cardViewHolder.cardTitle.getText().toString());
                     intent.putExtra("course", i+1);
+                    intent.putExtra("level", courses.get(i).getLevel());
                     view.getContext().startActivity(intent);
                 }
             }

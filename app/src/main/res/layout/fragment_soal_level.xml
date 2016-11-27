@@ -4,20 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="100dp"
-    tools:context="id.ac.umn.mobile.menu_1.SoalPostFragment">
-   <!-- <LinearLayout
-        android:id="@+id/progressbar_view"
-        android:layout_below="@+id/toolbar_beginner"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-        <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal" />
-    </LinearLayout>-->
+    tools:context="id.ac.umn.mobile.menu_1.SoalLevelFragment">
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/time_remaining"
@@ -91,7 +79,7 @@
         android:fontFamily="sans-serif-thin"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:text="30 s"
+        android:text="50 s"
 
         android:id="@+id/timer"
         android:background="@drawable/circle_bg"
