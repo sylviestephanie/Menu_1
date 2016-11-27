@@ -32,10 +32,10 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class TwoFragment extends Fragment {
-    private String username, level, fullname, score, image;
-    private int current_level;
-    private TextView username_text, level_text, fullname_text, score_text;
-    private ImageView mImage;
+    private String username, level, fullname, image;
+    private int current_level, score;
+    private TextView username_text, level_text, fullname_text, score_text, badges1_txt, badges2_txt, badges3_txt, badges4_txt;
+    private ImageView mImage, badges1_icon, badges2_icon, badges3_icon, badges4_icon;
     private LinearLayout layout;
 
     public TwoFragment() {
@@ -62,6 +62,18 @@ public class TwoFragment extends Fragment {
         level_text = (TextView) rootView.findViewById(R.id.user_profile_level);
         fullname_text = (TextView) rootView.findViewById(R.id.full_name);
         score_text = (TextView) rootView.findViewById(R.id.current_score);
+        badges1_txt = (TextView) rootView.findViewById(R.id.badges1_text);
+        badges2_txt = (TextView) rootView.findViewById(R.id.badges2_text);
+        badges3_txt = (TextView) rootView.findViewById(R.id.badges3_text);
+        badges4_txt = (TextView) rootView.findViewById(R.id.badges4_text);
+        badges1_icon = (ImageView) rootView.findViewById(R.id.badges1);
+        badges1_icon.setImageResource(R.drawable.sad);
+        badges2_icon = (ImageView) rootView.findViewById(R.id.badges2);
+        badges2_icon.setImageResource(R.drawable.sad);
+        badges3_icon = (ImageView) rootView.findViewById(R.id.badges3);
+        badges3_icon.setImageResource(R.drawable.sad);
+        badges4_icon = (ImageView) rootView.findViewById(R.id.badges4);
+        badges4_icon.setImageResource(R.drawable.sad);
 
         username_text.setText(username);
 
@@ -120,8 +132,42 @@ public class TwoFragment extends Fragment {
             mImage.setImageBitmap(getCircleBitmap(bm));
             //Set fullname & score
             fullname_text.setText(fullname);
-            score_text.setText(score);
+            score_text.setText(Integer.toString(score));
+            //Set badges
+           if(score>=500){
+                badges1_icon.setImageResource(R.drawable.trophy);
+                badges1_txt.setText("Achieved!");
+                badges2_icon.setImageResource(R.drawable.trophy);
+                badges2_txt.setText("Achieved!");
+                badges2_icon.setImageResource(R.drawable.trophy);
+                badges2_txt.setText("Achieved!");
+                badges3_icon.setImageResource(R.drawable.trophy);
+                badges3_txt.setText("Achieved!");
+                badges4_icon.setImageResource(R.drawable.trophy);
+                badges4_txt.setText("Achieved!");
+            }
+            else if(score>=200){
+               badges1_icon.setImageResource(R.drawable.trophy);
+               badges1_txt.setText("Achieved!");
+               badges2_icon.setImageResource(R.drawable.trophy);
+               badges2_txt.setText("Achieved!");
+               badges2_icon.setImageResource(R.drawable.trophy);
+               badges2_txt.setText("Achieved!");
+               badges3_icon.setImageResource(R.drawable.trophy);
+               badges3_txt.setText("Achieved!");
+           }
+            else if(score >=100){
+                badges1_icon.setImageResource(R.drawable.trophy);
+                badges1_txt.setText("Achieved!");
+                badges2_icon.setImageResource(R.drawable.trophy);
+                badges2_txt.setText("Achieved!");
+            }
+            else if(score >= 50){
+               badges1_icon.setImageResource(R.drawable.trophy);
+               badges1_txt.setText("Achieved!");
+           }
         }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -135,7 +181,7 @@ public class TwoFragment extends Fragment {
                 for (int i = 0; i < profileArray.length(); i++) {
                     JSONObject obj = profileArray.getJSONObject(i);
                     fullname = obj.getString("fullname");
-                    score = obj.getString("score");
+                    score = obj.getInt("score");
                     image = obj.getString("image");
                 }
             }

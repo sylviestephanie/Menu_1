@@ -1,9 +1,14 @@
- <RelativeLayout
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:background="@color/backgroundDark">
-
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:fillViewport="true"
+    android:scrollbars="vertical">
+    <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="@color/backgroundDark">
         <ImageView
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
@@ -48,13 +53,20 @@
             android:textSize="14sp" />
 
         <RelativeLayout
+            android:id="@+id/profile"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header_cover_image"
             android:background="@color/colorPrimaryDark"
             android:layout_margin="5dp"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/profile_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile Details"
+                android:textColor="#fff"
+                android:layout_margin="10dp"/>
             <LinearLayout
                 android:id="@+id/progressbar_view_profile"
                 android:layout_width="match_parent"
@@ -72,7 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:stretchColumns="1">
+                android:stretchColumns="1"
+                android:layout_below="@id/profile_text">
                 <TableRow>
                     <TextView
                         android:text="Full Name"
@@ -82,7 +95,6 @@
                         android:textColor="#fff"/>
                     <TextView
                         android:id="@+id/full_name"
-                        android:text="name"
                         android:gravity="left"
                         android:padding="3dip"
                         android:layout_margin="5dp"
@@ -97,7 +109,6 @@
                         android:textColor="#fff"/>
                     <TextView
                         android:id="@+id/current_score"
-                        android:text="score"
                         android:gravity="left"
                         android:padding="3dip"
                         android:layout_margin="5dp"
@@ -105,5 +116,112 @@
                 </TableRow>
             </TableLayout>
         </RelativeLayout>
- </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/badges"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/badges_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Achievement"
+                android:textColor="#fff"
+                android:layout_margin="10dp"/>
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/badges_text"
+                android:layout_margin="5dp"
+                android:stretchColumns="*"
+                android:id="@+id/badges1_table">
+                <TableRow>
+                    <TextView
+                        android:text="50 Score"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:text="100 Score"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:text="200 Score"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:text="500 Score"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                </TableRow>
+                <TableRow>
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/badges1" />
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/badges2" />
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/badges3"/>
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/badges4"/>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/badges1_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:id="@+id/badges2_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:id="@+id/badges3_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:id="@+id/badges4_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                </TableRow>
+            </TableLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
 
