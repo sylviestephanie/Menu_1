@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -34,6 +36,7 @@ public class BeginnerActivity extends AppCompatActivity {
     int flag1,flag2,flag3;
     Toolbar toolbar;
     FloatingActionButton mFab;
+    Button testLevel;
     private LinearLayout layout;
 
     @Override
@@ -52,6 +55,16 @@ public class BeginnerActivity extends AppCompatActivity {
         }
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         new GetFlag().execute();
+
+        testLevel = (Button) findViewById(R.id.test);
+        testLevel.setVisibility(View.GONE);
+        testLevel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     private void initializeData() {
@@ -108,7 +121,7 @@ public class BeginnerActivity extends AppCompatActivity {
             {
                 e.printStackTrace();
             }
-            WebService service = new WebService("http://learnit-database.000webhostapp.com/course.php?level="+level, "GET", "");
+            WebService service = new WebService("http://learnit-database.esy.es/course.php?level="+level, "GET", "");
             jsonString = service.responseBody;
             try {
                 JSONArray courseArray = new JSONArray(jsonString);
@@ -135,6 +148,7 @@ public class BeginnerActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
             super.onPostExecute(hashMaps);
             layout.setVisibility(View.GONE);
+            testLevel.setVisibility(View.VISIBLE);
             if(hashMaps.get(0).get("success").equals("1"))
             {
                 flag1 = Integer.parseInt(hashMaps.get(0).get("flag1"));
