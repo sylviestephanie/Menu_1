@@ -172,7 +172,7 @@ public class SoalFragment extends Fragment {
         @Override
         protected void onPostExecute(final ArrayList<Question> questions) {
             super.onPostExecute(questions);
-            progressDialog.hide();
+            progressDialog.dismiss();
             arrQ = questions;
             Log.d("qid","q " + qid);
             current_q = questions.get(qid);

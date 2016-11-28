@@ -151,7 +151,7 @@ public class SoalPostFragment extends Fragment {
         @Override
         protected void onPostExecute(final ArrayList<Question> questions) {
             super.onPostExecute(questions);
-            progressDialog.hide();
+            progressDialog.dismiss();
             //layout.setVisibility(View.GONE);
             arrQ = questions;
             Log.d("qid","q " + qid);
