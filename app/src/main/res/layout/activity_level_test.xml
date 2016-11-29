@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="id.ac.umn.mobile.menu_1.LevelTestActivity">
+    tools:context="id.ac.umn.mobile.menu_1.LevelTestActivity"
+    android:background="@color/backgroundDark">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_beginner"

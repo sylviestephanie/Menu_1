@@ -2,14 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="id.ac.umn.mobile.menu_1.ThreeFragment">
+    tools:context="id.ac.umn.mobile.menu_1.ThreeFragment"
+    android:background="@color/backgroundDark">
 
     <LinearLayout
         android:id="@+id/progressbar_view_leaderboard"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark">
         <ProgressBar
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
@@ -21,5 +23,6 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="5dp"
         android:id="@+id/rv_leaderboard" />
 </RelativeLayout>

@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="id.ac.umn.mobile.menu_1.PretestResultFragment">
+    tools:context="id.ac.umn.mobile.menu_1.PretestResultFragment"
+    android:background="@color/backgroundDark"
+    android:padding="5dp">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
@@ -19,12 +21,14 @@
         android:layout_marginTop="20dp"
         android:textSize="40dp"
         android:text="Your Score : "
+        android:textColor="#ffffff"
         android:textAlignment="center"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="20dp"
+        android:textColor="#ffffff"
         android:text="Press Button Below to Start Course"
         android:textAlignment="center"/>
     <Button

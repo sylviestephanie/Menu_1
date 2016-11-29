@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="id.ac.umn.mobile.menu_1.PosttestResultFragment">
+    tools:context="id.ac.umn.mobile.menu_1.PosttestResultFragment"
+    android:background="@color/backgroundDark"
+    android:padding="5dp">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
@@ -18,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="40dp"
+        android:textColor="#ffffff"
         android:text="Your Score : "
         android:textAlignment="center"/>
     <TextView
@@ -25,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="20dp"
+        android:textColor="#ffffff"
         android:text="Press Button Below to Start New Course"
         android:textAlignment="center"/>
     <Button

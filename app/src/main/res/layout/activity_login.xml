@@ -3,22 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:scrollbarAlwaysDrawVerticalTrack="true"
-    tools:context="id.ac.umn.mobile.menu_1.LoginActivity">
+    tools:context="id.ac.umn.mobile.menu_1.LoginActivity"
+    >
 
-    <TextView
+    <!--<TextView
         android:id="@+id/login_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="70dp"
+        anrawable/title"arginTop="70dp"
         android:gravity="center_horizontal"
         android:text="Learn It"
         android:textColor="#fff"
         android:textSize="26sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />-->
+
+    <ImageView
+        android:id="@+id/login_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/title"
+        />
 
     <RelativeLayout
         android:layout_width="fill_parent"

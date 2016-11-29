@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="id.ac.umn.mobile.menu_1.PreTestActivity">
+    tools:context="id.ac.umn.mobile.menu_1.PreTestActivity"
+    android:background="@color/backgroundDark">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_beginner"

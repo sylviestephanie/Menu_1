@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="100dp"
-    tools:context="id.ac.umn.mobile.menu_1.SoalTryoutFragment">
+    tools:context="id.ac.umn.mobile.menu_1.SoalTryoutFragment"
+    android:background="@color/backgroundDark"
+    android:padding="5dp">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -14,6 +16,7 @@
         android:layout_height="wrap_content"
         android:text="Time Remaining"
         android:layout_marginBottom="10dp"
+        android:textColor="#ffffff"
         android:textAlignment="center"
         />
 
@@ -24,7 +27,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_below="@+id/line"
@@ -34,6 +37,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/question"
+        android:textColor="#ffffff"
         android:text="QUESTION"
         android:textSize="20dp"/>
     <RadioGroup
@@ -49,19 +53,22 @@
             android:id="@+id/opt_a"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
+            android:buttonTint="@color/colorAccent"
+            android:textColor="#ffffff"
             android:textSize="20dp"/>
         <RadioButton
             android:id="@+id/opt_b"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
+            android:buttonTint="@color/colorAccent"
+            android:textColor="#ffffff"
             android:textSize="20dp"/>
         <RadioButton
             android:id="@+id/opt_c"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
+            android:buttonTint="@color/colorAccent"
+            android:textColor="#ffffff"
             android:textSize="20dp"/>
     </RadioGroup>
 
