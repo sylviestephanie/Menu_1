@@ -6,34 +6,35 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CourseActivity extends AppCompatActivity {
+public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
 
     private String username="";
     private int level,course;
     int flag1,flag2,flag3;
     Toolbar toolbar;
-    FloatingActionButton mFab;
     private LinearLayout layout;
     Button postTest;
+    private static final int RECOVERY_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +69,39 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
-
+        YouTubePlayerSupportFragment frag =
+                (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
+        frag.initialize("AIzaSyBBU7IRY2bCZot6cNO6xcEYYTy0hREDnqE", this);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
+        if (!wasRestored) {
+            player.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+        }
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult errorReason) {
+        if (errorReason.isUserRecoverableError()) {
+            errorReason.getErrorDialog(this, RECOVERY_REQUEST).show();
+        } else {
+            String error = "error";
+            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
     class GetFlag extends AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>
     {
         @Override
