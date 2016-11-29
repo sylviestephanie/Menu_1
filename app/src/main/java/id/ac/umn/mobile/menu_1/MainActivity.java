@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         displayFirebaseRegId();
     }
 
+
     // Fetches reg id from shared preferences
     // and displays on the screen
     private void displayFirebaseRegId() {
