@@ -2,6 +2,7 @@ package id.ac.umn.mobile.menu_1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -138,8 +139,24 @@ public class MainActivity extends AppCompatActivity {
         String regId = pref.getString("regId", null);
 
         Log.e(TAG, "Firebase reg id: " + regId);
-        Log.d("ABDEL",regId);
+        SharedPreferences pref2 = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+        String name = pref2.getString("USERNAME", "0");
+        Log.e(TAG,name);
+        new RegisterFireBase().execute(name,regId);
+        //WebService webService = new WebService("http://learnit-database.esy.es/register_firebase.php?username="+name+"&firebase_id="+regId,"GET", "");
     }
+
+    class RegisterFireBase extends AsyncTask<String,Void,Object>{
+
+
+        @Override
+        protected Object doInBackground(String[] params) {
+            WebService webService = new WebService("http://learnit-database.esy.es/register_firebase.php?username="+params[0]+"&firebase_id="+params[1],"GET", "");
+            String jsonString = webService.responseBody;
+            return null;
+        }
+    }
+
 
     @Override
     protected void onResume() {
