@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -167,6 +168,8 @@ public class TwoFragment extends Fragment {
                badges1_txt.setText("Achieved!");
            }
         }
+
+
 
 
         @Override

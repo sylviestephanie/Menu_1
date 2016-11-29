@@ -2,8 +2,22 @@ package id.ac.umn.mobile.menu_1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +29,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -33,6 +49,8 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.IOException;
+
 import id.ac.umn.mobile.menu_1.R;
 import id.ac.umn.mobile.menu_1.app.Config;
 import id.ac.umn.mobile.menu_1.utils.NotificationUtils;
@@ -43,11 +61,59 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private PagerAdapter pAdapter;
     private Boolean exit = false;
-
+    private int RESULT_LOAD_IMAGE=1;
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtMessage;
+
+    private Bitmap getCircleBitmap(Bitmap bitmap) {
+        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+
+        final int color = Color.RED;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        bitmap.recycle();
+
+        return output;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri uri = data.getData();
+            try {
+                UserPicture pict=new UserPicture(uri,getContentResolver());
+                Bitmap adjustedBitmap= pict.getBitmap();
+                adjustedBitmap=getCircleBitmap(adjustedBitmap);
+                ImageView imageView = (ImageView) findViewById(R.id.user_profile_photo);
+                imageView.setImageBitmap(adjustedBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void change_profile(View v){
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
