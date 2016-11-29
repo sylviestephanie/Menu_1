@@ -26,7 +26,8 @@
 <ScrollView
     android:layout_below="@id/youtube_fragment"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:padding="10dp">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -51,42 +52,49 @@
                 android:layout_gravity="center_vertical|center_horizontal" />
         </LinearLayout>
 
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"/>
+        android:id="@+id/title"/>-->
 
     <TextView
         android:id="@+id/info_intro"
-        android:layout_below="@+id/title"
-        android:text="What Will I Learn?"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:text="WHAT WILL I LEARN?"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/info"
         android:layout_below="@+id/info_intro"
+        android:textSize="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/summary_intro"
         android:layout_below="@+id/info"
-        android:text="Course Summary"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:text="COURSE SUMMARY"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/summary"
         android:layout_below="@+id/summary_intro"
+        android:textSize="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/post_test"
         android:layout_below="@+id/summary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="#FFFFFF"
         android:text="Take Post Test"

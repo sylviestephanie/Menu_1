@@ -44,10 +44,10 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         youtube_vid=new GetVideo();
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         String title = getIntent().getStringExtra("TITLE");
-        TextView tvTitle=(TextView)findViewById(R.id.title);
+        /*TextView tvTitle=(TextView)findViewById(R.id.title);*/
         info_text = (TextView) findViewById(R.id.info);
         summary_text = (TextView) findViewById(R.id.summary);
-        tvTitle.setText(title);
+        /*tvTitle.setText(title);*/
         level = getIntent().getIntExtra("level",1);
         Log.d("lvlcourse", Integer.toString(course));
         course = getIntent().getIntExtra("course",1);

@@ -70,7 +70,7 @@ public class BeginnerActivity extends AppCompatActivity {
                 intent = new Intent(view.getContext(), LevelTestActivity.class);
                 intent.putExtra("level", level);
                 view.getContext().startActivity(intent);
-                //finish();
+
             }
         });
 
@@ -108,7 +108,7 @@ public class BeginnerActivity extends AppCompatActivity {
             username = pref.getString("USERNAME", "");
             Log.d("user", username);
             WebService webService = new WebService("http://learnit-database.esy.es/flag_test.php?username="+username+"&type=1&id="+level,"GET", "");
-//            WebService webService = new WebService("http://10.0.2.2/android/flag_test.php?username="+username+"&type=1&id="+level,"GET", "");
+
             String jsonString = webService.responseBody;
             ArrayList<HashMap<String,String>> arr = new ArrayList<>();
             try{
@@ -151,8 +151,7 @@ public class BeginnerActivity extends AppCompatActivity {
                 JSONObject obj =new JSONObject(jsonString);
                 int code = obj.getInt("success");
                 flag_level_test1 = Integer.parseInt(obj.getString("flag_1"));
-                /*flag_level_test2 = Integer.parseInt(obj.getString("flag_2"));
-                flag_level_test3 = Integer.parseInt(obj.getString("flag_3"));*/
+
             }
             catch (JSONException e)
             {
@@ -198,7 +197,7 @@ public class BeginnerActivity extends AppCompatActivity {
             RecyclerView rv= (RecyclerView)findViewById(R.id.rv_beginner);
             rv.setHasFixedSize(true);
 
-            initializeData(); //initialize flag (hardcode)
+            initializeData();
 
             RVCourseAdapter adapter = new RVCourseAdapter(courses);
             rv.setAdapter(adapter);
@@ -211,24 +210,7 @@ public class BeginnerActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams l = rv.getLayoutParams();
                 l.height = getResources().getDimensionPixelSize(R.dimen.rv);
                 rv.setLayoutParams(l);
-                /*if(level == 1 && flag_level_test1  !=1) {
-                    layout_button.setVisibility(View.VISIBLE);
-                    ViewGroup.LayoutParams l = rv.getLayoutParams();
-                    l.height = getResources().getDimensionPixelSize(R.dimen.rv);
-                    rv.setLayoutParams(l);
-                }
-                else if(level == 2 && flag_level_test2  !=1) {
-                    layout_button.setVisibility(View.VISIBLE);
-                    ViewGroup.LayoutParams l = rv.getLayoutParams();
-                    l.height = getResources().getDimensionPixelSize(R.dimen.rv);
-                    rv.setLayoutParams(l);
-                }
-                else if(level == 3 && flag_level_test3  !=1) {
-                    layout_button.setVisibility(View.VISIBLE);
-                    ViewGroup.LayoutParams l = rv.getLayoutParams();
-                    l.height = getResources().getDimensionPixelSize(R.dimen.rv);
-                    rv.setLayoutParams(l);
-                }*/
+
             }
         }
     }
