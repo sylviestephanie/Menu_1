@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,15 +34,18 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
     private int level,course;
     int flag1,flag2,flag3;
     Toolbar toolbar;
-    private LinearLayout layout;
+    private LinearLayout layout, ll_sv, ll_button;
     Button postTest;
     private static final int RECOVERY_REQUEST = 1;
+    LinearLayout.LayoutParams l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
+        ll_sv = (LinearLayout) findViewById(R.id.ll_sv);
+        ll_button =  (LinearLayout) findViewById(R.id.ll_button);
         String title = getIntent().getStringExtra("TITLE");
         TextView tvTitle=(TextView)findViewById(R.id.title);
         tvTitle.setText(title);
@@ -49,6 +54,10 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         course = getIntent().getIntExtra("course",1);
         Log.d("couesinactivity", Integer.toString(course));
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
+
+        //ll_sv.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, R.dimen.sv));
+        //l.height = getResources().getDimensionPixelSize(R.dimen.sv);
+//        l.height = LinearLayout.LayoutParams.MATCH_PARENT;
         if (toolbar != null) {
             toolbar.setTitle(title);
             setSupportActionBar(toolbar);
@@ -154,20 +163,20 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
             }
             if(level == 1) {
-                if (course == 1 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
-                if (course == 2 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
-                if (course == 3 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 1 && flag1 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                if (course == 2 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                if (course == 3 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE);}
             }
             else if(level == 2)
             {
-                if (course == 4 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
-                if (course == 5 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
-                if (course == 6 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 4 && flag1 != 1) {ll_button.setVisibility(View.VISIBLE);}
+                if (course == 5 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                if (course == 6 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE); }
             }
             else{
-                if (course == 7 && flag1 != 1) postTest.setVisibility(View.VISIBLE);
-                if (course == 8 && flag2 != 1) postTest.setVisibility(View.VISIBLE);
-                if (course == 9 && flag3 != 1) postTest.setVisibility(View.VISIBLE);
+                if (course == 7 && flag1 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                if (course == 8 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                if (course == 9 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE); }
             }
         }
     }

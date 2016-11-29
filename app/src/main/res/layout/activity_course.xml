@@ -32,27 +32,53 @@
             android:layout_gravity="center_vertical|center_horizontal" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/post_test"
-        android:layout_below="@+id/toolbar_beginner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="#FFFFFF"
-        android:text="Take Post Test"
-        android:visibility="gone"/>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/post_test"
+        android:layout_below="@+id/toolbar_beginner"
         android:id="@+id/title"/>
 
     <fragment
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/toolbar_beginner"
         android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
         android:id="@+id/youtube_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/ll_sv"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_below="@id/youtube_fragment">
+        <ScrollView
+
+            android:id="@+id/sv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <TextView
+                android:id="@+id/desc"
+                android:text="a\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_sv"
+        android:visibility="gone">
+        <Button
+            android:id="@+id/post_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:text="Take Post Test"
+            />
+    </LinearLayout>
 
 </RelativeLayout>
