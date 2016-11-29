@@ -28,6 +28,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.getbase:floatingactionbutton:1.7.0'
+    compile 'com.google.firebase:firebase-messaging:9.6.0'
     testCompile 'junit:junit:4.12'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
 }
+apply plugin: 'com.google.gms.google-services'

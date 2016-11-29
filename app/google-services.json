@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "359235852112",
+    "firebase_url": "https://interactive-learning-150112.firebaseio.com",
+    "project_id": "interactive-learning-150112",
+    "storage_bucket": "interactive-learning-150112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359235852112:android:3d0a0dc5f0704866",
+        "android_client_info": {
+          "package_name": "id.ac.umn.mobile.menu_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359235852112-likdfahgbaebkjdptng05h3smpe9kdga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLhz2MrM4BPNV2L7iHEl_n4cvQx2HM3sc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
