@@ -70,7 +70,7 @@ public class BeginnerActivity extends AppCompatActivity {
                 intent = new Intent(view.getContext(), LevelTestActivity.class);
                 intent.putExtra("level", level);
                 view.getContext().startActivity(intent);
-                finish();
+                //finish();
             }
         });
 

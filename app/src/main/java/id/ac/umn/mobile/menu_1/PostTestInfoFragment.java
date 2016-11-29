@@ -17,7 +17,7 @@ import android.widget.Button;
 public class PostTestInfoFragment extends Fragment {
 
     private Bundle data;
-    private int level,course;
+    private int level,course,prev_level;
     private String title;
 
     public PostTestInfoFragment() {
@@ -32,6 +32,7 @@ public class PostTestInfoFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_post_test_info, container, false);
         data = getArguments();
         level = data.getInt("level");
+        prev_level =data.getInt("lvl");
         course = data.getInt("course");
         title =  data.getString("title");
         /*Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();*/
@@ -59,12 +60,13 @@ public class PostTestInfoFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
+                /*Intent intent;
                 intent = new Intent(view.getContext(), CourseActivity.class);
                 intent.putExtra("TITLE", title);
                 intent.putExtra("course", course);
+//                intent.putExtra("level", prev_level);
                 intent.putExtra("level", level);
-                view.getContext().startActivity(intent);
+                view.getContext().startActivity(intent);*/
                 getActivity().finish();
             }
         });

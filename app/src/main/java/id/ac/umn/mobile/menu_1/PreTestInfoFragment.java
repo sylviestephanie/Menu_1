@@ -19,7 +19,7 @@ import android.widget.Toast;
 public class PreTestInfoFragment extends Fragment {
 
     private Bundle data;
-    private int level;
+    private int level,prev_level;
     public PreTestInfoFragment() {
         // Required empty public constructor
     }
@@ -32,6 +32,7 @@ public class PreTestInfoFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_pre_test_info, container, false);
         data = getArguments();
         level = data.getInt("level");
+        prev_level = data.getInt("lvl");
         return rootview;
     }
 
@@ -56,10 +57,11 @@ public class PreTestInfoFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), BeginnerActivity.class);
+               /* Intent intent = new Intent(view.getContext(), BeginnerActivity.class);
                 Log.d("level_post_cancel",Integer.toString(level));
+//                intent.putExtra("LVL",prev_level );
                 intent.putExtra("LVL",level );
-                startActivity(intent);
+                startActivity(intent);*/
                 getActivity().finish();
             }
         });

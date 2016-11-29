@@ -45,6 +45,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         TextView tvTitle=(TextView)findViewById(R.id.title);
         tvTitle.setText(title);
         level = getIntent().getIntExtra("level",1);
+        Log.d("lvlcourse", Integer.toString(course));
         course = getIntent().getIntExtra("course",1);
         Log.d("couesinactivity", Integer.toString(course));
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
@@ -65,7 +66,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 intent.putExtra("course", course);
                 intent.putExtra("level", getIntent().getIntExtra("level",1));
                 view.getContext().startActivity(intent);
-                finish();
+                //finish();
             }
         });
 

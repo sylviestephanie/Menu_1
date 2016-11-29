@@ -18,6 +18,7 @@ public class PostTestActivity extends AppCompatActivity {
         int level = getIntent().getIntExtra("level",1);
         Log.d("levelinposttest", Integer.toString(level));
         int course=getIntent().getIntExtra("course",1);
+        Log.d("courseinpost", Integer.toString(course));
         /*if(level == 1)
             course = getIntent().getIntExtra("course",1);
         else if(level == 2)
@@ -56,6 +57,7 @@ public class PostTestActivity extends AppCompatActivity {
         data.putString("username",username);
         data.putString("title", title);
         data.putInt("level", Integer.parseInt(clevel));
+//        data.putInt("lvl", level);
         fragment.setArguments(data);
         fragmentTransaction.replace(android.R.id.content, fragment);
 

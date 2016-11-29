@@ -54,18 +54,28 @@ public class OneFragment extends Fragment {
             levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
             levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_https_white_48dp));
             levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_https_white_48dp));
+            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_https_white_48dp));
         }
         else if(current_level == 2)
         {
             levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
             levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
             levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_https_white_48dp));
+            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_https_white_48dp));
+        }
+        else if(current_level == 3)
+        {
+            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_https_white_48dp));
         }
         else
         {
             levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
             levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
             levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_person_white_48dp));
         }
     }
 }

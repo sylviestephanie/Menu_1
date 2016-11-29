@@ -36,8 +36,13 @@
             android:screenOrientation="portrait" />
         <activity android:name=".CourseActivity" />
         <activity android:name=".AboutActivity" />
-        <activity android:name=".PostTestActivity" android:screenOrientation="portrait" />
-        <activity android:name=".LevelTestActivity" android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".PostTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LevelTestActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".TryOutActivity"></activity>
     </application>
 
 </manifest>
