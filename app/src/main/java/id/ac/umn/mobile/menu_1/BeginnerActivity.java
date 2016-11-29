@@ -1,14 +1,10 @@
 package id.ac.umn.mobile.menu_1;
 
-import android.animation.IntArrayEvaluator;
-import android.animation.ObjectAnimator;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +33,6 @@ public class BeginnerActivity extends AppCompatActivity {
     int flag1,flag2,flag3;
     int flagpost1, flagpost2, flagpost3, flag_level_test1,flag_level_test2,flag_level_test3;
     Toolbar toolbar;
-    FloatingActionButton mFab;
     Button testLevel;
     private LinearLayout layout, layout_button;
 
@@ -192,7 +185,6 @@ public class BeginnerActivity extends AppCompatActivity {
                 flag2 = Integer.parseInt(hashMaps.get(0).get("flag2"));
                 flag3 = Integer.parseInt(hashMaps.get(0).get("flag3"));
             }
-            mFab = (FloatingActionButton)findViewById(R.id.favorite);
 
             RecyclerView rv= (RecyclerView)findViewById(R.id.rv_beginner);
             rv.setHasFixedSize(true);
