@@ -28,26 +28,31 @@ import java.util.HashMap;
 
 public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
 
-    private String username="";
+    private String username="", info, summary, video;
+    private TextView info_text, summary_text;
     private int level,course;
     int flag1,flag2,flag3;
     Toolbar toolbar;
     private LinearLayout layout;
     Button postTest;
     private static final int RECOVERY_REQUEST = 1;
+    private GetVideo youtube_vid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
+        youtube_vid=new GetVideo();
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         String title = getIntent().getStringExtra("TITLE");
         TextView tvTitle=(TextView)findViewById(R.id.title);
+        info_text = (TextView) findViewById(R.id.info);
+        summary_text = (TextView) findViewById(R.id.summary);
         tvTitle.setText(title);
         level = getIntent().getIntExtra("level",1);
         Log.d("lvlcourse", Integer.toString(course));
         course = getIntent().getIntExtra("course",1);
-        Log.d("couesinactivity", Integer.toString(course));
+        Log.d("courseinactivity", Integer.toString(course));
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
         if (toolbar != null) {
             toolbar.setTitle(title);
@@ -88,7 +93,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
         if (!wasRestored) {
-            player.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+            youtube_vid.execute(player);
         }
     }
 
@@ -139,6 +144,17 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
             {
                 e.printStackTrace();
             }
+            webService = new WebService("http://learnit-database.esy.es/get_course_details.php?course_id="+course,"GET", "");
+            jsonString = webService.responseBody;
+            try{
+                JSONObject obj =new JSONObject(jsonString);
+                info = obj.getString("info");
+                summary = obj.getString("summary");
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
 
             return arr;
         }
@@ -147,6 +163,8 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
             super.onPostExecute(hashMaps);
             layout.setVisibility(View.GONE);
+            info_text.setText(info);
+            summary_text.setText(summary);
             if(hashMaps.get(0).get("success").equals("1"))
             {
                 flag1 = Integer.parseInt(hashMaps.get(0).get("flag1"));
@@ -171,4 +189,26 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
             }
         }
     }
+
+    class GetVideo extends AsyncTask<YouTubePlayer,Void,Void>{
+        @Override
+        protected Void doInBackground(YouTubePlayer... params) {
+            WebService webService = new WebService("http://learnit-database.esy.es/get_course_details.php?course_id="+course,"GET", "");
+            String jsonString = webService.responseBody;
+            YouTubePlayer player=params[0];
+            try{
+                JSONObject obj =new JSONObject(jsonString);
+                video = obj.getString("video");
+                player.cueVideo(video);
+                player.play();
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+
 }

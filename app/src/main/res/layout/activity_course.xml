@@ -16,25 +16,75 @@
         android:background="?attr/colorPrimary"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-
-    <LinearLayout
-        android:id="@+id/progressbar_view"
+    <fragment
         android:layout_below="@+id/toolbar_beginner"
+        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+        android:id="@+id/youtube_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+<ScrollView
+    android:layout_below="@id/youtube_fragment"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="80dp"
+        android:orientation="vertical">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/progressbar_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal" />
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"/>
+
+    <TextView
+        android:id="@+id/info_intro"
+        android:layout_below="@+id/title"
+        android:text="What Will I Learn?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_below="@+id/info_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/summary_intro"
+        android:layout_below="@+id/info"
+        android:text="Course Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/summary"
+        android:layout_below="@+id/summary_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/post_test"
-        android:layout_below="@+id/toolbar_beginner"
+        android:layout_below="@+id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
@@ -42,17 +92,6 @@
         android:text="Take Post Test"
         android:visibility="gone"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/post_test"
-        android:id="@+id/title"/>
-
-    <fragment
-        android:layout_below="@+id/title"
-        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
-        android:id="@+id/youtube_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+    </RelativeLayout>
+</ScrollView>
 </RelativeLayout>
