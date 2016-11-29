@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -31,7 +32,7 @@ import java.util.ArrayList;
  */
 public class SoalTryoutFragment extends Fragment {
 
-    String course = "1";
+    int course = 0;
     private ArrayList<Question> arrQ;
     private int qid = 0, score = 0;
     CountDownTimer countDownTimer;
@@ -52,6 +53,9 @@ public class SoalTryoutFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_soal_tryout, container, false);
         data = getArguments();
+        Random r = new Random();
+        course = r.nextInt(3 - 1) + 1;
+
         new GetQuestion().execute();
         return rootView;
     }
