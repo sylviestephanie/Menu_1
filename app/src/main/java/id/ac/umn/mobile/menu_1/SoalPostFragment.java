@@ -77,8 +77,7 @@ public class SoalPostFragment extends Fragment {
         data = getArguments();
         course = data.getInt("course");
         username = data.getString("username");
-//        Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();
-//        layout = (LinearLayout) rootView.findViewById(R.id.progressbar_view);
+
         new GetQuestion().execute();
 
         return rootView;

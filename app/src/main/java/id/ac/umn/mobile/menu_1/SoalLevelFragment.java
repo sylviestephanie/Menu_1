@@ -185,7 +185,7 @@ public class SoalLevelFragment extends Fragment {
                 }
             });
 
-            countDownTimer = new CountDownTimer(30000, 1000) {
+            countDownTimer = new CountDownTimer(50000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     if(!submitted)
