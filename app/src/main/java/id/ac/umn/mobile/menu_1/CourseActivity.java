@@ -37,7 +37,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
     private LinearLayout layout, ll_sv, ll_button;
     Button postTest;
     private static final int RECOVERY_REQUEST = 1;
-    LinearLayout.LayoutParams l;
+    ViewGroup.LayoutParams l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,9 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         setContentView(R.layout.activity_course);
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         ll_sv = (LinearLayout) findViewById(R.id.ll_sv);
+        l = ll_sv.getLayoutParams();
+
+
         ll_button =  (LinearLayout) findViewById(R.id.ll_button);
         String title = getIntent().getStringExtra("TITLE");
         TextView tvTitle=(TextView)findViewById(R.id.title);
@@ -164,19 +167,22 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
             }
             if(level == 1) {
                 if (course == 1 && flag1 != 1) {ll_button.setVisibility(View.VISIBLE); }
-                if (course == 2 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
-                if (course == 3 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE);}
+                else if (course == 2 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                else if (course == 3 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE);}
+                else {l.height = ViewGroup.LayoutParams.MATCH_PARENT;ll_sv.setLayoutParams(l);}
             }
             else if(level == 2)
             {
                 if (course == 4 && flag1 != 1) {ll_button.setVisibility(View.VISIBLE);}
-                if (course == 5 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
-                if (course == 6 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                else if (course == 5 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                else if (course == 6 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                else {l.height = ViewGroup.LayoutParams.MATCH_PARENT;ll_sv.setLayoutParams(l);}
             }
             else{
                 if (course == 7 && flag1 != 1) {ll_button.setVisibility(View.VISIBLE); }
-                if (course == 8 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
-                if (course == 9 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                else if (course == 8 && flag2 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                else if (course == 9 && flag3 != 1) {ll_button.setVisibility(View.VISIBLE); }
+                else {l.height = ViewGroup.LayoutParams.MATCH_PARENT;ll_sv.setLayoutParams(l);}
             }
         }
     }
