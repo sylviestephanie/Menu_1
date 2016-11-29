@@ -77,7 +77,8 @@ public class SoalPostFragment extends Fragment {
         data = getArguments();
         course = data.getInt("course");
         username = data.getString("username");
-        Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();
+//        layout = (LinearLayout) rootView.findViewById(R.id.progressbar_view);
         new GetQuestion().execute();
 
         return rootView;
@@ -111,9 +112,9 @@ public class SoalPostFragment extends Fragment {
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setMessage("Loading...");
             progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(true);
+            progressDialog.setCancelable(false);
             progressDialog.show();
-            //layout.setVisibility(View.VISIBLE);
+//            layout.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -152,7 +153,7 @@ public class SoalPostFragment extends Fragment {
         protected void onPostExecute(final ArrayList<Question> questions) {
             super.onPostExecute(questions);
             progressDialog.dismiss();
-            //layout.setVisibility(View.GONE);
+//            layout.setVisibility(View.GONE);
             arrQ = questions;
             Log.d("qid","q " + qid);
             current_q = questions.get(qid);

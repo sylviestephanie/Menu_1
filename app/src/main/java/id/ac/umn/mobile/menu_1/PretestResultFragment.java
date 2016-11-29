@@ -19,7 +19,7 @@ import android.widget.TextView;
  */
 public class PretestResultFragment extends Fragment {
 
-    private int score,course,level;
+    private int score,course,level,prev_level;
     private String username;
     private Bundle data;
     public PretestResultFragment() {
@@ -37,6 +37,7 @@ public class PretestResultFragment extends Fragment {
         course = data.getInt("course");
         username = data.getString("username");
         level =  data.getInt("level");
+        prev_level = data.getInt("lvl");
         new SaveScore().execute();
         return rootView;
     }
@@ -53,6 +54,7 @@ public class PretestResultFragment extends Fragment {
                 Intent intent = new Intent(view.getContext(), CourseActivity.class);
                 intent.putExtra("TITLE", getArguments().getString("title"));
                 intent.putExtra("course", course);
+//                intent.putExtra("level", prev_level);
                 intent.putExtra("level", level);
                 view.getContext().startActivity(intent);
                 getActivity().finish();

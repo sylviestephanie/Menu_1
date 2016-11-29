@@ -50,9 +50,9 @@ public class LevelTestInfoFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), BeginnerActivity.class);
+                /*Intent intent = new Intent(view.getContext(), BeginnerActivity.class);
                 intent.putExtra("LVL",level );
-                startActivity(intent);
+                startActivity(intent);*/
                 getActivity().finish();
             }
         });

@@ -60,6 +60,7 @@ public class PreTestActivity extends AppCompatActivity{
         data.putString("username",username);
         data.putString("title", title);
         data.putInt("level", Integer.parseInt(clevel));
+        data.putInt("lvl", level);
         fragment.setArguments(data);
         fragmentTransaction.replace(android.R.id.content, fragment);
 

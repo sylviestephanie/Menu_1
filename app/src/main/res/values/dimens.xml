@@ -21,5 +21,5 @@
     <dimen name="card_image_height">150dp</dimen>
     <dimen name="list_body">14sp</dimen>
     <dimen name="navheader_height">222dp</dimen>
-    <dimen name="rv">440dp</dimen>
+    <dimen name="rv">450dp</dimen>
 </resources>
