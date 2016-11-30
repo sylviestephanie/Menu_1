@@ -51,31 +51,31 @@ public class OneFragment extends Fragment {
         levels = new ArrayList<>();
         if(current_level == 1)
         {
-            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_https_white_48dp));
-            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_https_white_48dp));
-            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_https_white_48dp));
+            levels.add(new TutorialLevel("Beginner", "Understand very basic concept of Computer Science.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Intermediate", "Understand more features of Computer Science.", R.drawable.lock));
+            levels.add(new TutorialLevel("Advanced", "Can utilize Computer Science into more advanced features.", R.drawable.lock));
+            levels.add(new TutorialLevel("Try Out", "Test your skill.", R.drawable.lock));
         }
         else if(current_level == 2)
         {
-            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_https_white_48dp));
-            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_https_white_48dp));
+            levels.add(new TutorialLevel("Beginner", "Understand very basic concept of Computer Science.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Intermediate", "Understand more features of Computer Science.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Advanced", "Can utilize Computer Science into more advanced features.", R.drawable.lock));
+            levels.add(new TutorialLevel("Try Out", "Test your skill.", R.drawable.lock));
         }
         else if(current_level == 3)
         {
-            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_https_white_48dp));
+            levels.add(new TutorialLevel("Beginner", "Understand very basic concept of Computer Science.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Intermediate", "Understand more features of Computer Science.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Advanced", "Can utilize Computer Science into more advanced features.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Try Out", "Test your skill.", R.drawable.lock));
         }
         else
         {
-            levels.add(new TutorialLevel("Beginner", "easy", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Intermediate", "medium", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Advanced", "hard", R.drawable.ic_person_white_48dp));
-            levels.add(new TutorialLevel("Try Out", "try out", R.drawable.ic_person_white_48dp));
+            levels.add(new TutorialLevel("Beginner", "Understand very basic concept of Computer Science.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Intermediate", "Understand more features of Computer Science.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Advanced", "Can utilize Computer Science into more advanced features.", R.drawable.level_icon));
+            levels.add(new TutorialLevel("Try Out", "Test your skill.", R.drawable.level_icon));
         }
     }
 }
