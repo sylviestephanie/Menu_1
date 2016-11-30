@@ -10,6 +10,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/colorPrimary"
+    android:focusableInTouchMode="true"
     tools:context="id.ac.umn.mobile.menu_1.LoginActivity">
 
     <ImageButton
@@ -64,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Remember Me"
+            android:textColor="#FFFFFF"
             android:buttonTint="#FFFFFF"
             android:layout_marginBottom="10dp"/>
 
