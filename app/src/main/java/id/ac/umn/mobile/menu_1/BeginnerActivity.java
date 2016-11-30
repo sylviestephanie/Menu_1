@@ -31,7 +31,7 @@ public class BeginnerActivity extends AppCompatActivity {
     private String username="";
     private int level;
     int flag1,flag2,flag3;
-    int flagpost1, flagpost2, flagpost3, flag_level_test1,flag_level_test2,flag_level_test3;
+    int flagpost1, flagpost2, flagpost3, flag_level_test1;
     Toolbar toolbar;
     Button testLevel;
     private LinearLayout layout, layout_button;
@@ -86,6 +86,21 @@ public class BeginnerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        new GetFlag().execute();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        courses.clear();
+        RecyclerView rv = (RecyclerView) findViewById(R.id.rv_beginner);
+        rv.getAdapter().notifyDataSetChanged();
+    }
 
     class GetFlag extends AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>
     {

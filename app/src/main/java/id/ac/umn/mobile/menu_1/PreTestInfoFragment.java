@@ -57,11 +57,6 @@ public class PreTestInfoFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intent = new Intent(view.getContext(), BeginnerActivity.class);
-                Log.d("level_post_cancel",Integer.toString(level));
-//                intent.putExtra("LVL",prev_level );
-                intent.putExtra("LVL",level );
-                startActivity(intent);*/
                 getActivity().finish();
             }
         });

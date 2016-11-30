@@ -97,7 +97,7 @@ public class SoalFragment extends Fragment {
         data = getArguments();
         course = data.getInt("course");
         username = data.getString("username");
-        Toast.makeText(getActivity(),Integer.toString(data.getInt("course")), Toast.LENGTH_LONG).show();
+
         new GetQuestion().execute();
 
         return rootView;
