@@ -102,7 +102,8 @@ public class LevelTestResultFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            WebService webService = new WebService("http://learnit-database.esy.es/update_flag.php?username="+username+"&type=3&id=0&score="+score,"GET", "");
+            int prev_lvl = level-1;
+            WebService webService = new WebService("http://learnit-database.esy.es/update_flag.php?username="+username+"&type=3&id="+prev_lvl+"&score="+score,"GET", "");
             String jsonString = webService.responseBody;
             Log.d("level",Integer.toString(level));
             Log.d("unane",username);
