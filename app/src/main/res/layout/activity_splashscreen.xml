@@ -10,7 +10,8 @@
     android:orientation="vertical"
     android:id="@+id/lin_lay"
     android:gravity="center"
-    tools:context="id.ac.umn.mobile.menu_1.Splashscreen">
+    tools:context="id.ac.umn.mobile.menu_1.Splashscreen"
+    android:background="@color/backgroundDark">
 
     <ImageView
         android:layout_width="match_parent"

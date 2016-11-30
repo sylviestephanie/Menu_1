@@ -52,6 +52,7 @@ public class Splashscreen extends AppCompatActivity implements Animation.Animati
     public void onAnimationEnd(Animation animation) {
         Intent intent = new Intent(Splashscreen.this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

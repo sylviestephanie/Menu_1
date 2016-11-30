@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         final EditText username = (EditText) findViewById(R.id.username_txt);
         final EditText password = (EditText) findViewById(R.id.password_txt);
         final CheckBox rememberMeCheck = (CheckBox) findViewById(R.id.remember_me);
+        final ImageView title = (ImageView) findViewById(R.id.login_title);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
         Button login = (Button) findViewById(R.id.login_btn);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
