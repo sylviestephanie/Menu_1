@@ -1,6 +1,7 @@
 package id.ac.umn.mobile.menu_1;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,9 +11,12 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,7 +116,6 @@ public class TwoFragment extends Fragment {
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         bitmap.recycle();
-
         return output;
     }
 
@@ -123,14 +126,24 @@ public class TwoFragment extends Fragment {
             super.onPreExecute();
             layout.setVisibility(View.VISIBLE);
         }
-
+        public  Bitmap decodeBase64(String input) {
+            byte[] decodedByte = Base64.decode(input, 0);
+            return BitmapFactory
+                    .decodeByteArray(decodedByte, 0, decodedByte.length);
+        }
         @Override
         protected void onPostExecute(Void a) {
             layout.setVisibility(View.GONE);
             //Set image
-            int imageid = getResources().getIdentifier(image, "drawable", "id.ac.umn.mobile.menu_1");
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), imageid);
-            mImage.setImageBitmap(getCircleBitmap(bm));
+            if(image.length()>10){
+                mImage.setImageBitmap(MainActivity.bitmapImg);
+            }else {
+                int imageid = getResources().getIdentifier(image, "drawable", "id.ac.umn.mobile.menu_1");
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), imageid);
+                mImage.setImageBitmap(getCircleBitmap(bm));
+            }
+
+
             //Set fullname & score
             fullname_text.setText(fullname);
             score_text.setText(Integer.toString(score));
@@ -186,6 +199,8 @@ public class TwoFragment extends Fragment {
                     fullname = obj.getString("fullname");
                     score = obj.getInt("score");
                     image = obj.getString("image");
+                    //image = image.replaceAll("\\\\", "");
+                    Log.e("ABDEL",image);
                 }
             }
             catch (JSONException e)

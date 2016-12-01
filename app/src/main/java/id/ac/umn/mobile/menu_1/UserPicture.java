@@ -19,7 +19,7 @@ import java.io.InvalidObjectException;
  * Created by abdelhaq on 29-Nov-16.
  */
 
-public class UserPicture {
+public class UserPicture{
     static int MAX_WIDTH = 600;
     static int MAX_HEIGHT = 800;
     Uri uri;
@@ -29,6 +29,9 @@ public class UserPicture {
     int storedHeight;
     int storedWidth;
 
+    public UserPicture(){
+
+    }
     public UserPicture(Uri uri, ContentResolver resolver) {
         this.uri = uri;
         this.resolver = resolver;
@@ -36,7 +39,7 @@ public class UserPicture {
 
     private boolean getInformation() throws IOException {
         if (getInformationFromMediaDatabase())
-            return true;
+           return true;
 
         if (getInformationFromFileSystem())
             return true;
@@ -47,8 +50,8 @@ public class UserPicture {
     /* Support for gallery apps and remote ("picasa") images */
     private boolean getInformationFromMediaDatabase() {
         String[] fields = { MediaStore.Images.Media.DATA, MediaStore.Images.ImageColumns.ORIENTATION };
+        //Cursor cursor = resolver.query(uri, fields, null, null, null);
         Cursor cursor = resolver.query(uri, fields, null, null, null);
-
         if (cursor == null)
             return false;
 
@@ -128,6 +131,7 @@ public class UserPicture {
     }
 
     public Bitmap getBitmap() throws IOException {
+
         if (!getInformation())
             throw new FileNotFoundException();
 

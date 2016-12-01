@@ -1,5 +1,10 @@
 package id.ac.umn.mobile.menu_1;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -17,6 +22,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,6 +32,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,7 +56,14 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.Calendar;
 
 import id.ac.umn.mobile.menu_1.R;
 import id.ac.umn.mobile.menu_1.app.Config;
@@ -66,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtMessage;
+    public static ContentResolver cr;
+    public static Bitmap bitmapImg;
 
     private Bitmap getCircleBitmap(Bitmap bitmap) {
         final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -96,28 +112,91 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri uri = data.getData();
             try {
-                UserPicture pict=new UserPicture(uri,getContentResolver());
+                String temp=uri.toString();
+                Log.e("tostring",uri.toString());
+                Log.e("ABDEL2",Uri.parse(temp).toString());
+                Uri newUri=Uri.parse(temp);
+
+                UserPicture pict=new UserPicture(newUri,getContentResolver());
+
                 Bitmap adjustedBitmap= pict.getBitmap();
                 adjustedBitmap=getCircleBitmap(adjustedBitmap);
                 ImageView imageView = (ImageView) findViewById(R.id.user_profile_photo);
                 imageView.setImageBitmap(adjustedBitmap);
+
+
+                SharedPreferences.Editor prefEdit
+                        = getSharedPreferences("USER_PREFERENCES", MODE_PRIVATE).edit();
+
+//                prefEdit.putString("userPicture", encodeTobase64(adjustedBitmap));
+//                prefEdit.commit();
+//                Log.e("ABDEL",uri.toString());
+                SharedPreferences pref
+                        = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+                new UpdateUserPicture().execute(String.format(
+                        "username=%s&image=%s",
+                        pref.getString("USERNAME",""),
+                        //encodeTobase64(adjustedBitmap)
+                        uri.toString()
+
+                ));
+                getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+    public static String encodeTobase64(Bitmap image) {
+        Bitmap immage = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        Log.d("Image Log:", imageEncoded);
+        return imageEncoded;
+    }
 
     public void change_profile(View v){
 
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+
+//        try{
+//
+//            getIntent().setAction(Intent.ACTION_OPEN_DOCUMENT);
+//            Uri uri=Uri.parse("content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Ffile%2F9233/ORIGINAL/NONE/726927857");
+//            String temp=uri.toString();
+//            Log.e("tostring",uri.toString());
+//            Log.e("ABDEL2",Uri.parse(temp).toString());
+//            Uri newUri=Uri.parse(temp);
+//            getContentResolver().takePersistableUriPermission(newUri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            UserPicture pict=new UserPicture(newUri,getContentResolver());
+//
+//            Bitmap adjustedBitmap= pict.getBitmap();
+//            adjustedBitmap=getCircleBitmap(adjustedBitmap);
+//            ImageView imageView = (ImageView) findViewById(R.id.user_profile_photo);
+//            imageView.setImageBitmap(adjustedBitmap);}catch (Exception e){
+//            e.printStackTrace();
+//        }
+
+
+        Log.e(TAG,"notif make");
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+//        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+//                | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -195,6 +274,29 @@ public class MainActivity extends AppCompatActivity {
         };
 
         displayFirebaseRegId();
+        new GetProfilePicture().execute();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
+        notificationIntent.addCategory("android.intent.category.DEFAULT");
+
+        PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Calendar firingCal= Calendar.getInstance();
+        Calendar currentCal = Calendar.getInstance();
+
+        firingCal.set(Calendar.HOUR_OF_DAY, 9); // At the hour you wanna fire
+        firingCal.set(Calendar.MINUTE, 0); // Particular minute
+        firingCal.set(Calendar.SECOND, 0); // particular second
+
+        if(firingCal.compareTo(currentCal) < 0) {
+            firingCal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        Long intendedTime = firingCal.getTimeInMillis();
+        //alarmManager.setExact(AlarmManager.RTC_WAKEUP, intendedTime, broadcast);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intendedTime,AlarmManager.INTERVAL_DAY,broadcast);
+
+
     }
 
 
@@ -209,7 +311,51 @@ public class MainActivity extends AppCompatActivity {
         String name = pref2.getString("USERNAME", "0");
         Log.e(TAG,name);
         new RegisterFireBase().execute(name,regId);
+        cr=getContentResolver();
+
         //WebService webService = new WebService("http://learnit-database.esy.es/register_firebase.php?username="+name+"&firebase_id="+regId,"GET", "");
+    }
+    class GetProfilePicture extends AsyncTask<Void,Void,String>{
+        @Override
+        protected void onPostExecute(String str) {
+            super.onPostExecute(str);
+            try {
+                Uri uri = Uri.parse(str);
+                getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                UserPicture pict = new UserPicture(uri, getContentResolver());
+
+
+                bitmapImg = pict.getBitmap();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+            String name = pref.getString("USERNAME", "0");
+            WebService webService = new WebService("http://learnit-database.esy.es/get_user_details.php?username="+name,"GET", "");
+//            WebService webService = new WebService("https://10.0.2.2/android/get_user_details.php?username="+username,"GET", "");
+            String jsonString = webService.responseBody;
+            Log.d("result", jsonString);
+            try
+            {
+                JSONArray profileArray = new JSONArray(jsonString);
+                for (int i = 0; i < profileArray.length(); i++) {
+                    JSONObject obj = profileArray.getJSONObject(i);
+                    String image = obj.getString("image");
+                   // image = image.replaceAll("\\\\", "");
+                    return image;
+
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     class RegisterFireBase extends AsyncTask<String,Void,Object>{
@@ -218,6 +364,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Object doInBackground(String[] params) {
             WebService webService = new WebService("http://learnit-database.esy.es/register_firebase.php?username="+params[0]+"&firebase_id="+params[1],"GET", "");
+            String jsonString = webService.responseBody;
+            return null;
+        }
+    }
+    class UpdateUserPicture extends AsyncTask<String,Void,Object>{
+
+
+        @Override
+        protected Object doInBackground(String[] params) {
+            WebService webService = new WebService("http://learnit-database.esy.es/update_user_picture.php","POST", params[0]);
             String jsonString = webService.responseBody;
             return null;
         }
