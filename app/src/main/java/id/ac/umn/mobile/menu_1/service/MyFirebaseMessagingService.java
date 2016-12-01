@@ -96,6 +96,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
                 notificationUtils.playNotificationSound();
+                //keep notification even when not in background
                 Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
                 resultIntent.putExtra("message", message);
 
