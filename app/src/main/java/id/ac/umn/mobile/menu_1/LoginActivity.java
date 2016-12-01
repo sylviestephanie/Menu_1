@@ -108,29 +108,26 @@ public class LoginActivity extends AppCompatActivity {
             WebService webService = new WebService("http://learnit-database.esy.es/login.php","POST", formParam);
 //            WebService webService = new WebService("http://10.0.2.2/android/login.php","POST", formParam);
             String jsonString = webService.responseBody;
-            
+
             ArrayList<HashMap<String, String>> result = new ArrayList<>();
-            try
-            {
-                JSONObject obj = new JSONObject(jsonString);
-                String success = obj.getString("success");
-                String message = null;
+            if(jsonString!=null) {
+                try {
+                    JSONObject obj = new JSONObject(jsonString);
+                    String success = obj.getString("success");
+                    String message = null;
 
-                if(success.equals("1"))
-                {
-                    message = obj.getString("level");
+                    if (success.equals("1")) {
+                        message = obj.getString("level");
+                    } else message = obj.getString("message");
+
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("success", success);
+                    map.put("body", message);
+
+                    result.add(map);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else message = obj.getString("message");
-
-                HashMap<String, String> map = new HashMap<>();
-                map.put("success", success);
-                map.put("body", message);
-
-                result.add(map);
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
             }
             return result;
         }
@@ -140,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             super.onPostExecute(hashMaps);
             progressDialog.dismiss();
             //Toast.makeText(LoginActivity.this,hashMaps.get(0).get("body"), Toast.LENGTH_SHORT).show();
-            if(hashMaps.get(0).get("success").equals("1"))
+            if(hashMaps.size()>0&& hashMaps.get(0).get("success").equals("1"))
             {
                 SharedPreferences.Editor prefEdit
                         = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE).edit();
@@ -168,6 +165,22 @@ public class LoginActivity extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(i);
                 finish();
+            }
+            else if(hashMaps.size()==0){
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                builder1.setMessage("Connection failed");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
             else
             {
