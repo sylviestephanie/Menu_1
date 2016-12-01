@@ -97,9 +97,11 @@ public class BeginnerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        courses.clear();
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rv_beginner);
-        rv.getAdapter().notifyDataSetChanged();
+        if(courses!=null) {
+            courses.clear();
+            RecyclerView rv = (RecyclerView) findViewById(R.id.rv_beginner);
+            rv.getAdapter().notifyDataSetChanged();
+        }
     }
 
     class GetFlag extends AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>
