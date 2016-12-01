@@ -2,6 +2,7 @@ package id.ac.umn.mobile.menu_1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +53,7 @@ public class BeginnerActivity extends AppCompatActivity {
         }
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
         layout_button = (LinearLayout) findViewById(R.id.ll_button);
+
         new GetFlag().execute();
 
         testLevel = (Button) findViewById(R.id.test);

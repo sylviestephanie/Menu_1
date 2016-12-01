@@ -338,9 +338,10 @@ public class MainActivity extends AppCompatActivity {
             WebService webService = new WebService("http://learnit-database.esy.es/get_user_details.php?username="+name,"GET", "");
 //            WebService webService = new WebService("https://10.0.2.2/android/get_user_details.php?username="+username,"GET", "");
             String jsonString = webService.responseBody;
-            Log.d("result", jsonString);
             try
             {
+
+                Log.d("result", jsonString);
                 JSONArray profileArray = new JSONArray(jsonString);
                 for (int i = 0; i < profileArray.length(); i++) {
                     JSONObject obj = profileArray.getJSONObject(i);
