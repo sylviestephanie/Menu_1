@@ -135,8 +135,8 @@ public class TwoFragment extends Fragment {
         protected void onPostExecute(Void a) {
             layout.setVisibility(View.GONE);
             //Set image
-            if(image.length()>10){
-                mImage.setImageBitmap(MainActivity.bitmapImg);
+            if(MainActivity.bitmapImg!=null){
+                mImage.setImageBitmap(getCircleBitmap(MainActivity.bitmapImg));
             }else {
                 int imageid = getResources().getIdentifier(image, "drawable", "id.ac.umn.mobile.menu_1");
                 Bitmap bm = BitmapFactory.decodeResource(getResources(), imageid);

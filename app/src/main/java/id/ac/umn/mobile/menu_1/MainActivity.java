@@ -24,6 +24,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.MediaStore;
+import android.renderscript.RenderScript;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -62,7 +63,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Calendar;
 
 import id.ac.umn.mobile.menu_1.R;
@@ -105,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
         return output;
     }
 
+    private String bitmapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        return Base64.encodeToString(byteArray, Base64.URL_SAFE);
+    }
+    private Bitmap base64ToBitmap(String b64) {
+        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.URL_SAFE);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -120,6 +133,11 @@ public class MainActivity extends AppCompatActivity {
                 UserPicture pict=new UserPicture(newUri,getContentResolver());
 
                 Bitmap adjustedBitmap= pict.getBitmap();
+                String xx=bitmapToBase64(adjustedBitmap);
+                Log.println(Log.ERROR,"this is what we want",xx);
+                Log.e("this is ano :","xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                adjustedBitmap=base64ToBitmap(xx);
+
                 adjustedBitmap=getCircleBitmap(adjustedBitmap);
                 ImageView imageView = (ImageView) findViewById(R.id.user_profile_photo);
                 imageView.setImageBitmap(adjustedBitmap);
@@ -131,31 +149,26 @@ public class MainActivity extends AppCompatActivity {
 //                prefEdit.putString("userPicture", encodeTobase64(adjustedBitmap));
 //                prefEdit.commit();
 //                Log.e("ABDEL",uri.toString());
+
+
+
+
                 SharedPreferences pref
                         = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
                 new UpdateUserPicture().execute(String.format(
                         "username=%s&image=%s",
                         pref.getString("USERNAME",""),
+                        xx
                         //encodeTobase64(adjustedBitmap)
-                        uri.toString()
+                        //uri.toString()
 
                 ));
-                getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                //getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
-    public static String encodeTobase64(Bitmap image) {
-        Bitmap immage = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-
-        Log.d("Image Log:", imageEncoded);
-        return imageEncoded;
     }
 
     public void change_profile(View v){
@@ -180,14 +193,13 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 
-        Log.e(TAG,"notif make");
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-//        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
-//                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-//                | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
 
     }
 
@@ -320,12 +332,12 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String str) {
             super.onPostExecute(str);
             try {
-                Uri uri = Uri.parse(str);
-                getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                UserPicture pict = new UserPicture(uri, getContentResolver());
+//                Uri uri = Uri.parse(str);
+//               getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                UserPicture pict = new UserPicture(uri, getContentResolver());
 
 
-                bitmapImg = pict.getBitmap();
+//                bitmapImg = pict.getBitmap();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -335,25 +347,44 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
             String name = pref.getString("USERNAME", "0");
-            WebService webService = new WebService("http://learnit-database.esy.es/get_user_details.php?username="+name,"GET", "");
+//            WebService webService = new WebService("http://learnit-database.esy.es/get_user_details.php?username="+name,"GET", "");
 //            WebService webService = new WebService("https://10.0.2.2/android/get_user_details.php?username="+username,"GET", "");
-            String jsonString = webService.responseBody;
-            try
-            {
+//            String jsonString = webService.responseBody;
+//            try
+//            {
+//
+//                Log.d("result", jsonString);
+//                JSONArray profileArray = new JSONArray(jsonString);
+//                for (int i = 0; i < profileArray.length(); i++) {
+//                    JSONObject obj = profileArray.getJSONObject(i);
+//                    String image = obj.getString("image");
+//                   // image = image.replaceAll("\\\\", "");
+//                    return image;
+//
+//                }
+//            }
+//            catch (Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+            try {
+//                URL url = new URL("http://learnit-database.esy.es/get_user_image.php?username="+name);
+//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                connection.setDoInput(true);
+//                connection.connect();
+//                InputStream input = connection.getInputStream();
+//
+//                bitmapImg = BitmapFactory.decodeStream(input);
+//baca udah valid
+                WebService webService = new WebService("http://learnit-database.esy.es/get_user_image.php?username="+name,"GET", "");
+                String jsonString = webService.responseBody;
+                Log.e("this is what we got",jsonString);
 
-                Log.d("result", jsonString);
-                JSONArray profileArray = new JSONArray(jsonString);
-                for (int i = 0; i < profileArray.length(); i++) {
-                    JSONObject obj = profileArray.getJSONObject(i);
-                    String image = obj.getString("image");
-                   // image = image.replaceAll("\\\\", "");
-                    return image;
-
-                }
-            }
-            catch (Exception e)
-            {
+                bitmapImg = base64ToBitmap(jsonString);
+            } catch (Exception e) {
+                // Log exception
                 e.printStackTrace();
+                return null;
             }
             return null;
         }
