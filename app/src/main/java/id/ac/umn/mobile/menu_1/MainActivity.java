@@ -150,9 +150,6 @@ public class MainActivity extends AppCompatActivity {
 //                prefEdit.commit();
 //                Log.e("ABDEL",uri.toString());
 
-
-
-
                 SharedPreferences pref
                         = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
                 new UpdateUserPicture().execute(String.format(
@@ -207,8 +204,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -307,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
         Long intendedTime = firingCal.getTimeInMillis();
         //alarmManager.setExact(AlarmManager.RTC_WAKEUP, intendedTime, broadcast);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intendedTime,AlarmManager.INTERVAL_DAY,broadcast);
-
 
     }
 
@@ -490,6 +484,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.Forum:
+                Intent intent = new Intent(MainActivity.this, ForumActivity.class);
+                startActivity(intent);
+                break;
             case R.id.Logout:
                 SharedPreferences.Editor prefEdit
                         = MainActivity.this.getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE).edit();
@@ -499,7 +497,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.About:
-                Intent intent=new Intent(this,AboutActivity.class);
+                intent=new Intent(this,AboutActivity.class);
                 startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
