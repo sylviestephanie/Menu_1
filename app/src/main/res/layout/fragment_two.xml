@@ -137,10 +137,18 @@
                 android:text="ACHIEVEMENT"
                 android:textColor="#fff"
                 android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/achievement_text"
+                android:layout_below="@+id/badges_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score Achievement"
+                android:textColor="#fff"
+                android:layout_marginLeft="10dp"/>
             <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/badges_text"
+                android:layout_below="@id/achievement_text"
                 android:layout_margin="5dp"
                 android:stretchColumns="*"
                 android:id="@+id/badges1_table">
@@ -223,7 +231,100 @@
                         android:textColor="#fff"/>
                 </TableRow>
             </TableLayout>
-
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_below="@+id/badges1_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time Spent"
+                android:textColor="#fff"
+                android:layout_marginLeft="10dp"/>
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/time_text"
+                android:layout_margin="5dp"
+                android:stretchColumns="*"
+                android:id="@+id/badges2_table">
+                <TableRow>
+                    <TextView
+                        android:text="5 Minute"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:text="15 Minute"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:text="30 Minute"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:text="1 Hour"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                </TableRow>
+                <TableRow>
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/time_badges1" />
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/time_badges2" />
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/time_badges3"/>
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/time_badges4"/>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/time_badges1_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:id="@+id/time_badges2_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:id="@+id/time_badges3_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:id="@+id/time_badges4_text"
+                        android:text="Not yet\n achieved"
+                        android:padding="3dip"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+                </TableRow>
+            </TableLayout>
         </RelativeLayout>
 
     </RelativeLayout>

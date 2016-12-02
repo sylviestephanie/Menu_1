@@ -38,9 +38,11 @@ import java.util.ArrayList;
  */
 public class TwoFragment extends Fragment {
     private String username, level, fullname, image;
-    private int current_level, score;
+    private int current_level, score, time_spent;
     private TextView username_text, level_text, fullname_text, score_text, badges1_txt, badges2_txt, badges3_txt, badges4_txt;
+    private TextView time_badges1_text, time_badges2_text, time_badges3_text, time_badges4_text;
     private ImageView mImage, badges1_icon, badges2_icon, badges3_icon, badges4_icon;
+    private ImageView time_badges1_icon, time_badges2_icon, time_badges3_icon, time_badges4_icon;
     private LinearLayout layout;
 
     public TwoFragment() {
@@ -79,6 +81,19 @@ public class TwoFragment extends Fragment {
         badges3_icon.setImageResource(R.drawable.sad);
         badges4_icon = (ImageView) rootView.findViewById(R.id.badges4);
         badges4_icon.setImageResource(R.drawable.sad);
+
+        time_badges1_text = (TextView) rootView.findViewById(R.id.time_badges1_text);
+        time_badges2_text = (TextView) rootView.findViewById(R.id.time_badges2_text);
+        time_badges3_text = (TextView) rootView.findViewById(R.id.time_badges3_text);
+        time_badges4_text = (TextView) rootView.findViewById(R.id.time_badges4_text);
+        time_badges1_icon = (ImageView) rootView.findViewById(R.id.time_badges1);
+        time_badges1_icon.setImageResource(R.drawable.sad);
+        time_badges2_icon = (ImageView) rootView.findViewById(R.id.time_badges2);
+        time_badges2_icon.setImageResource(R.drawable.sad);
+        time_badges3_icon = (ImageView) rootView.findViewById(R.id.time_badges3);
+        time_badges3_icon.setImageResource(R.drawable.sad);
+        time_badges4_icon = (ImageView) rootView.findViewById(R.id.time_badges4);
+        time_badges4_icon.setImageResource(R.drawable.sad);
 
         username_text.setText(username);
 
@@ -180,10 +195,36 @@ public class TwoFragment extends Fragment {
                badges1_icon.setImageResource(R.drawable.trophy);
                badges1_txt.setText("Achieved!");
            }
+
+            if(time_spent >= 3600){ // 1 hour
+                time_badges1_icon.setImageResource(R.drawable.trophy);
+                time_badges1_text.setText("Achieved!");
+                time_badges2_icon.setImageResource(R.drawable.trophy);
+                time_badges2_text.setText("Achieved!");
+                time_badges3_icon.setImageResource(R.drawable.trophy);
+                time_badges3_text.setText("Achieved!");
+                time_badges4_icon.setImageResource(R.drawable.trophy);
+                time_badges4_text.setText("Achieved!");
+            }
+            else if(time_spent>= 1800){ //30 minute
+                time_badges1_icon.setImageResource(R.drawable.trophy);
+                time_badges1_text.setText("Achieved!");
+                time_badges2_icon.setImageResource(R.drawable.trophy);
+                time_badges2_text.setText("Achieved!");
+                time_badges3_icon.setImageResource(R.drawable.trophy);
+                time_badges3_text.setText("Achieved!");
+            }
+            else if(time_spent>=900){ //15 minute
+                time_badges1_icon.setImageResource(R.drawable.trophy);
+                time_badges1_text.setText("Achieved!");
+                time_badges2_icon.setImageResource(R.drawable.trophy);
+                time_badges2_text.setText("Achieved!");
+            }
+            else if(time_spent>=300){ // 5 minute
+                time_badges1_icon.setImageResource(R.drawable.trophy);
+                time_badges1_text.setText("Achieved!");
+            }
         }
-
-
-
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -199,6 +240,7 @@ public class TwoFragment extends Fragment {
                     fullname = obj.getString("fullname");
                     score = obj.getInt("score");
                     image = obj.getString("image");
+                    time_spent = obj.getInt("time_spent");
                     //image = image.replaceAll("\\\\", "");
                     Log.e("ABDEL",image);
                 }
