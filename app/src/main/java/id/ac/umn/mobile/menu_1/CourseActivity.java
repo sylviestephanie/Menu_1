@@ -31,12 +31,13 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
     private String username="", info, summary, video;
     private TextView info_text, summary_text;
     private int level,course;
-    int flag1,flag2,flag3;
+    int flag1,flag2,flag3, duration=0;
     Toolbar toolbar;
     private LinearLayout layout;
     Button postTest;
     private static final int RECOVERY_REQUEST = 1;
     private GetVideo youtube_vid;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,9 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         summary_text = (TextView) findViewById(R.id.summary);
         /*tvTitle.setText(title);*/
         level = getIntent().getIntExtra("level",1);
-        Log.d("lvlcourse", Integer.toString(course));
+        //Log.d("lvlcourse", Integer.toString(course));
         course = getIntent().getIntExtra("course",1);
-        Log.d("courseinactivity", Integer.toString(course));
+        //Log.d("courseinactivity", Integer.toString(course));
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
         if (toolbar != null) {
             toolbar.setTitle(title);
@@ -60,13 +61,14 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        intent = new Intent(CourseActivity.this, PostTestActivity.class);
         new GetFlag().execute();
         postTest = (Button) findViewById(R.id.post_test);
         postTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
-                intent = new Intent(view.getContext(), PostTestActivity.class);
+                /*Intent intent;
+                intent = new Intent(view.getContext(), PostTestActivity.class);*/
                 intent.putExtra("TITLE", getIntent().getStringExtra("TITLE"));
                 intent.putExtra("course", course);
                 intent.putExtra("level", getIntent().getIntExtra("level",1));
@@ -203,6 +205,8 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 video = obj.getString("video");
                 player.cueVideo(video);
                 player.play();
+                duration = player.getDurationMillis();
+                intent.putExtra("DURATION", duration);
             }
             catch (JSONException e)
             {

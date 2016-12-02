@@ -19,22 +19,9 @@ public class PostTestActivity extends AppCompatActivity {
         Log.d("levelinposttest", Integer.toString(level));
         int course=getIntent().getIntExtra("course",1);
         Log.d("courseinpost", Integer.toString(course));
-        /*if(level == 1)
-            course = getIntent().getIntExtra("course",1);
-        else if(level == 2)
-        {
-            int temp = getIntent().getIntExtra("course",1);
-            if(temp == 1) course = 4;
-            else if(temp == 2) course = 5;
-            else if(temp == 3) course = 6;
-        }
-        else
-        {
-            int temp = getIntent().getIntExtra("course",1);
-            if(temp == 1) course = 7;
-            else if(temp == 2) course = 8;
-            else if(temp == 3) course = 9;
-        }*/
+
+        int duration = getIntent().getIntExtra("DURATION",0);
+
         String title = getIntent().getStringExtra("TITLE");
         toolbar = (Toolbar) findViewById(R.id.toolbar_beginner);
         if (toolbar != null) {
@@ -57,6 +44,7 @@ public class PostTestActivity extends AppCompatActivity {
         data.putString("username",username);
         data.putString("title", title);
         data.putInt("level", Integer.parseInt(clevel));
+        data.putInt("duration", duration);
 //        data.putInt("lvl", level);
         fragment.setArguments(data);
         fragmentTransaction.replace(android.R.id.content, fragment);

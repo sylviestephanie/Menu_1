@@ -86,8 +86,9 @@ public class TryoutResultFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             WebService webService = new WebService("http://learnit-database.esy.es/update_try_out_score.php?username="+username+"&score="+score,"GET", "");
-
             String jsonString = webService.responseBody;
+            webService = new WebService("http://learnit-database.esy.es/update_time.php?username="+username+"&time=100","GET", "");
+            jsonString = webService.responseBody;
             return null;
         }
 

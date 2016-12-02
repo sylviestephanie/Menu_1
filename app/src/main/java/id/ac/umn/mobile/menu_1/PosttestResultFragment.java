@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class PosttestResultFragment extends Fragment {
 
-    private int score,course,level;
+    private int score,course,level,duration;
     private String username;
     private Bundle data;
     public PosttestResultFragment() {
@@ -36,6 +36,8 @@ public class PosttestResultFragment extends Fragment {
         course = data.getInt("course");
         username = data.getString("username");
         level = data.getInt("level");
+        duration = data.getInt("duration");
+        duration = (duration/1000)+60;
         new SaveScore().execute();
         return rootView;
     }
@@ -75,6 +77,8 @@ public class PosttestResultFragment extends Fragment {
             WebService webService = new WebService("http://learnit-database.esy.es/update_flag.php?username="+username+"&type=2&id="+course+"&score="+score,"GET", "");
 //            WebService webService = new WebService("http://10.0.2.2/android/update_flag.php?username="+username+"&type=2&id="+course+"&score="+score,"GET", "");
             String jsonString = webService.responseBody;
+            webService = new WebService("http://learnit-database.esy.es/update_time.php?username="+username+"&time="+duration,"GET", "");
+            jsonString = webService.responseBody;
             return null;
         }
 

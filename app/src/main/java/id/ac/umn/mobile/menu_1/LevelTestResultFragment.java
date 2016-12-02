@@ -110,6 +110,8 @@ public class LevelTestResultFragment extends Fragment {
             WebService webService2 = new WebService("http://learnit-database.esy.es/update_current_level.php?username="+username+"&level="+level,"GET", "");
             jsonString = webService2.responseBody;
             Log.d("res",jsonString);
+            webService = new WebService("http://learnit-database.esy.es/update_time.php?username="+username+"&time=50","GET", "");
+            jsonString = webService2.responseBody;
             return null;
         }
 
