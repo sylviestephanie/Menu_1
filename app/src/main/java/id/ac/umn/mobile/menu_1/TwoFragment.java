@@ -196,7 +196,7 @@ public class TwoFragment extends Fragment {
                badges1_txt.setText("Achieved!");
            }
 
-            if(time_spent >= 3600){ // 1 hour
+            if(time_spent >= 7200){ // 120 minutes
                 time_badges1_icon.setImageResource(R.drawable.trophy);
                 time_badges1_text.setText("Achieved!");
                 time_badges2_icon.setImageResource(R.drawable.trophy);
@@ -206,7 +206,7 @@ public class TwoFragment extends Fragment {
                 time_badges4_icon.setImageResource(R.drawable.trophy);
                 time_badges4_text.setText("Achieved!");
             }
-            else if(time_spent>= 1800){ //30 minute
+            else if(time_spent>=5400){ //90 minutes
                 time_badges1_icon.setImageResource(R.drawable.trophy);
                 time_badges1_text.setText("Achieved!");
                 time_badges2_icon.setImageResource(R.drawable.trophy);
@@ -214,13 +214,13 @@ public class TwoFragment extends Fragment {
                 time_badges3_icon.setImageResource(R.drawable.trophy);
                 time_badges3_text.setText("Achieved!");
             }
-            else if(time_spent>=900){ //15 minute
+            else if(time_spent>=3600){ //60 minutes
                 time_badges1_icon.setImageResource(R.drawable.trophy);
                 time_badges1_text.setText("Achieved!");
                 time_badges2_icon.setImageResource(R.drawable.trophy);
                 time_badges2_text.setText("Achieved!");
             }
-            else if(time_spent>=300){ // 5 minute
+            else if(time_spent>=1800){ // 30 minutes
                 time_badges1_icon.setImageResource(R.drawable.trophy);
                 time_badges1_text.setText("Achieved!");
             }

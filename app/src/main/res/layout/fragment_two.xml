@@ -248,25 +248,25 @@
                 android:id="@+id/badges2_table">
                 <TableRow>
                     <TextView
-                        android:text="5 Minute"
+                        android:text="30 minutes"
                         android:padding="3dip"
                         android:layout_margin="5dp"
                         android:textAlignment="center"
                         android:textColor="#fff"/>
                     <TextView
-                        android:text="15 Minute"
+                        android:text="60 minutes"
                         android:padding="3dip"
                         android:layout_margin="5dp"
                         android:textAlignment="center"
                         android:textColor="#fff"/>
                     <TextView
-                        android:text="30 Minute"
+                        android:text="90 minutes"
                         android:padding="3dip"
                         android:layout_margin="5dp"
                         android:textAlignment="center"
                         android:textColor="#fff"/>
                     <TextView
-                        android:text="1 Hour"
+                        android:text="120 minutes"
                         android:padding="3dip"
                         android:layout_margin="5dp"
                         android:textAlignment="center"
