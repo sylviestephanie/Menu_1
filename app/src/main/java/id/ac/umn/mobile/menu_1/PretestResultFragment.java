@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class PretestResultFragment extends Fragment {
         data = getArguments();
         score = getArguments().getInt("score");
         course = data.getInt("course");
+        Log.d("courseresultfragment", Integer.toString(course));
         username = data.getString("username");
         level =  data.getInt("level");
         prev_level = data.getInt("lvl");

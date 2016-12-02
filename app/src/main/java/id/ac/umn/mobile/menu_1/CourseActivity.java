@@ -98,6 +98,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
         if (!wasRestored) {
             youtube_vid.execute(player);
+
         }
     }
 

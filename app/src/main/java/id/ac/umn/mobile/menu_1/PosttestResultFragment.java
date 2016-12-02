@@ -37,7 +37,7 @@ public class PosttestResultFragment extends Fragment {
         username = data.getString("username");
         level = data.getInt("level");
         duration = data.getInt("duration");
-        duration = (duration/1000)+60;
+        duration = 660;
         new SaveScore().execute();
         return rootView;
     }
