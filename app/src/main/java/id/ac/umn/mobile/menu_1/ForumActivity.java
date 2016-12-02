@@ -69,7 +69,11 @@ public class ForumActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if(url.contains("smf-media.com")) {
+                view.loadUrl(url);
+                // Adds Progress Bar Support
+                super.onPageStarted(view, url, null);
+                findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
+                /*if(url.contains("smf-media.com")) {
                     view.loadUrl(url);
                     // Adds Progress Bar Support
                     super.onPageStarted(view, url, null);
@@ -78,7 +82,7 @@ public class ForumActivity extends AppCompatActivity {
                 } else {
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(i);
-                }
+                }*/
                 return true;
             }
 
