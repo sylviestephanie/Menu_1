@@ -63,7 +63,8 @@ public class ForumActivity extends AppCompatActivity {
         webView.getSettings().setBuiltInZoomControls(true);
 
         // Change to your own forum url
-        webView.loadUrl("http://learnit-database.esy.es/q2a/");
+//        webView.loadUrl("http://learnit-database.esy.es/q2a/");
+        webView.loadUrl("http://learnit-database.esy.es/q2a/index.php/login?login=google&to=index.php/ask");
         webView.setVisibility(View.INVISIBLE);
 
         webView.setWebViewClient(new WebViewClient(){
