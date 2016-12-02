@@ -35,11 +35,13 @@ public class ForumActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/*
 
         // Adds Progress Bar Support
         this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
         // Makes Progress Bar Visible
         getWindow().setFeatureInt( Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
+*/
 
         setContentView(R.layout.activity_forum);
 
