@@ -33,12 +33,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
-        super.onCreateContextMenu(menu, v, menuInfo);
-        Log.e("abdel","you call me?");
-    }
 
 
     private String username="", info, summary, video;
@@ -87,15 +82,6 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 intent.putExtra("course", course);
                 intent.putExtra("level", getIntent().getIntExtra("level",1));
                 view.getContext().startActivity(intent);
-                //finish();
-            }
-        });
-        registerForContextMenu(summary_text);
-        summary_text.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.e("hola","its a long click");
-                return false;
             }
         });
         summary_text.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
