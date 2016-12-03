@@ -115,6 +115,19 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                     Log.e("YOU","wanna save something?");
                     Log.e("Here : ",getSelectedText(summary_text));
 
+                    SharedPreferences pref
+                            = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
+                    new SaveNotes().execute(
+                            String.format(
+                                    "username=%s&notes=%s",
+                                    pref.getString("USERNAME",""),
+                                    getSelectedText(summary_text)
+                                    )
+                    );
+                    Toast.makeText(CourseActivity.this, "Note taken : "+getSelectedText(summary_text), Toast.LENGTH_SHORT).show();
+                    mode.finish();
+                    return true;
+
 
                 }
                 return false;
@@ -122,7 +135,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-
+                Log.e("they call me","hiks");
             }
         });
         YouTubePlayerSupportFragment frag =
@@ -145,6 +158,17 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         // Perform your
     }
 
+    private class SaveNotes extends AsyncTask<String,Void,Void>{
+
+        @Override
+        protected Void doInBackground(String... params) {
+            WebService webService = new WebService("http://learnit-database.esy.es/new_notes.php","POST",params[0] );
+//            WebService webService = new WebService("https://10.0.2.2/android/get_user_details.php?username="+username,"GET", "");
+            String jsonString = webService.responseBody;
+            Log.d("result", jsonString);
+            return null;
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
