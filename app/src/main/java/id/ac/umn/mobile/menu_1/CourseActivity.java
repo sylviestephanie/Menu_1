@@ -27,7 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
@@ -57,7 +59,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         setContentView(R.layout.activity_course);
         youtube_vid=new GetVideo();
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
-        String title = getIntent().getStringExtra("TITLE");
+        final String title = getIntent().getStringExtra("TITLE");
         /*TextView tvTitle=(TextView)findViewById(R.id.title);*/
         info_text = (TextView) findViewById(R.id.info);
         summary_text = (TextView) findViewById(R.id.summary);
@@ -115,15 +117,23 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                     Log.e("YOU","wanna save something?");
                     Log.e("Here : ",getSelectedText(summary_text));
 
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String strDate = sdf.format(c.getTime());
+                    Log.e("mydate",strDate);
                     SharedPreferences pref
                             = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
                     new SaveNotes().execute(
                             String.format(
-                                    "username=%s&notes=%s",
+                                    "username=%s&notes=%s&course=%s&date=%s",
                                     pref.getString("USERNAME",""),
-                                    getSelectedText(summary_text)
+                                    getSelectedText(summary_text),
+                                    title,
+                                    strDate
+
                                     )
                     );
+
                     Toast.makeText(CourseActivity.this, "Note taken : "+getSelectedText(summary_text), Toast.LENGTH_SHORT).show();
                     mode.finish();
                     return true;
