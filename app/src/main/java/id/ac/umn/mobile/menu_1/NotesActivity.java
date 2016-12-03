@@ -28,7 +28,7 @@ public class NotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_notes);
         if (toolbar != null) {
-            toolbar.setTitle("About");
+            toolbar.setTitle("Notes");
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -39,12 +39,15 @@ public class NotesActivity extends AppCompatActivity {
 
         notesAdapter = new NotesAdapter(notesList2);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(notesAdapter);
 
 
-        prepareNotes();
+        //prepareNotes();
+        new GetNotes().execute();
+
     }
 
     private void prepareNotes() {
@@ -66,16 +69,30 @@ public class NotesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class GetNotes extends AsyncTask<String,Void,JSONArray>{
+    private class GetNotes extends AsyncTask<Void,Void,JSONArray>{
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             super.onPostExecute(jsonArray);
+            Log.e("selesai load","yeay");
+            try{
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+                String id = obj.getString("id");
+                String course = obj.getString("course");
+                String note = obj.getString("note");
+                String date = obj.getString("date");
+                Notes n=new Notes(id,course,note,date);
+                notesList2.add(n);
+                Log.e("the notes",course+note);
+                }
+            }catch (Exception e){e.printStackTrace();}
+            notesAdapter.notifyDataSetChanged();
 
         }
 
         @Override
-        protected JSONArray doInBackground(String... params) {
+        protected JSONArray doInBackground(Void... params) {
             SharedPreferences pref
                     = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
             WebService webService = new WebService("http://learnit-database.esy.es/get_notes.php?username="+pref.getString("USERNAME",""),"GET", "");
