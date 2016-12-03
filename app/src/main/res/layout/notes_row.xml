@@ -16,7 +16,21 @@
         android:textColor="@color/textColorPrimary"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/delete"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:padding="16dp"
+        android:layout_alignParentTop="true"
+        android:gravity="right"
+        android:text="x"
+        android:textColor="@color/textColorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        />
     <TextView
         android:id="@+id/note"
         android:textSize="12dp"
