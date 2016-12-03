@@ -305,12 +305,15 @@ public class MainActivity extends AppCompatActivity {
         firingCal.set(Calendar.MINUTE, 0); // Particular minute
         firingCal.set(Calendar.SECOND, 0); // particular second
 
-        if(firingCal.compareTo(currentCal) < 0) {
-            firingCal.add(Calendar.DAY_OF_MONTH, 1);
-        }
-        Long intendedTime = firingCal.getTimeInMillis();
+
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,SystemClock.elapsedRealtime(),60*60*1000,broadcast);
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,firingCal.getTimeInMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES/15,broadcast);
+//        if(firingCal.compareTo(currentCal) < 0) {
+//            firingCal.add(Calendar.DAY_OF_MONTH, 1);
+//        }
+//        Long intendedTime = firingCal.getTimeInMillis();
         //alarmManager.setExact(AlarmManager.RTC_WAKEUP, intendedTime, broadcast);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intendedTime,AlarmManager.INTERVAL_DAY,broadcast);
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intendedTime,AlarmManager.INTERVAL_DAY,broadcast);
 
     }
 
