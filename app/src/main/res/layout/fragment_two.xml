@@ -27,6 +27,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_person_white_48dp"
             android:onClick="change_profile"
+
            />
 
         <TextView
@@ -183,6 +184,8 @@
                         android:layout_margin="5dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+
+
                         android:id="@+id/badges1" />
                     <ImageView
                         android:layout_margin="5dp"

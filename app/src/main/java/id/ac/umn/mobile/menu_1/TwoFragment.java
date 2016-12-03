@@ -47,6 +47,7 @@ public class TwoFragment extends Fragment {
 
     public TwoFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -65,6 +66,7 @@ public class TwoFragment extends Fragment {
 
         // create bitmap from resource
         mImage = (ImageView) rootView.findViewById(R.id.user_profile_photo);
+
         username_text = (TextView) rootView.findViewById(R.id.user_profile_name);
         level_text = (TextView) rootView.findViewById(R.id.user_profile_level);
         fullname_text = (TextView) rootView.findViewById(R.id.full_name);
@@ -109,6 +111,8 @@ public class TwoFragment extends Fragment {
         level_text.setText(level);
 
         new GetProfileDetails().execute();
+
+
 
         return rootView;
     }

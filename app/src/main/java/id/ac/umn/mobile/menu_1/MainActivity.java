@@ -7,6 +7,7 @@ import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +24,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.renderscript.RenderScript;
 import android.support.design.widget.TabLayout;
@@ -77,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerAdapter pAdapter;
+
+
+
     private Boolean exit = false;
     private int RESULT_LOAD_IMAGE=1;
 
@@ -168,9 +173,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void change_profile(View v){
-
-
+        Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(100);
 //        try{
 //
 //            getIntent().setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -197,6 +204,8 @@ public class MainActivity extends AppCompatActivity {
                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+
+
 
     }
 
@@ -372,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
 //baca udah valid
                 WebService webService = new WebService("http://learnit-database.esy.es/get_user_image.php?username="+name,"GET", "");
                 String jsonString = webService.responseBody;
-                Log.e("this is what we got",jsonString);
+//                Log.e("this is what we got",jsonString);
 
                 bitmapImg = base64ToBitmap(jsonString);
             } catch (Exception e) {
@@ -487,6 +496,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.Forum:
                 Intent intent = new Intent(MainActivity.this, ForumActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.Notes:
+                Intent intent2 = new Intent(MainActivity.this, NotesActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.Logout:
                 SharedPreferences.Editor prefEdit

@@ -9,6 +9,9 @@ import android.os.Bundle;
 
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +23,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +31,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+        Log.e("abdel","you call me?");
+    }
+
 
     private String username="", info, summary, video;
     private TextView info_text, summary_text;
@@ -38,6 +49,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
     private static final int RECOVERY_REQUEST = 1;
     private GetVideo youtube_vid;
     Intent intent;
+    MenuItem saveToNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +88,61 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 //finish();
             }
         });
+        registerForContextMenu(summary_text);
+        summary_text.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.e("hola","its a long click");
+                return false;
+            }
+        });
+        summary_text.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                saveToNotes= menu.add("Take notes");
 
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                if(item.getItemId()==saveToNotes.getItemId()){
+                    Log.e("YOU","wanna save something?");
+                    Log.e("Here : ",getSelectedText(summary_text));
+
+
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        });
         YouTubePlayerSupportFragment frag =
                 (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
         frag.initialize("AIzaSyBBU7IRY2bCZot6cNO6xcEYYTy0hREDnqE", this);
+    }
+    private String getSelectedText(TextView tv) {
+        String selectedText = "";
+        int min = 0;
+        int max = tv.getText().length();
+        if (tv.isFocused()) {
+            final int textStartIndex = tv.getSelectionStart();
+            final int textEndIndex = tv.getSelectionEnd();
+
+            min = Math.max(0, Math.min(textStartIndex, textEndIndex));
+            max = Math.max(0, Math.max(textStartIndex, textEndIndex));
+            selectedText = tv.getText().subSequence(min, max).toString().trim();
+        }
+        return selectedText;
+        // Perform your
     }
 
     @Override

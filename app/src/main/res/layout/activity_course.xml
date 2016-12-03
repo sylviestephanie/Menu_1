@@ -63,7 +63,10 @@
         android:textSize="15dp"
         android:text="WHAT WILL I LEARN?"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true" />
 
     <TextView
         android:id="@+id/info"
@@ -71,7 +74,10 @@
         android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true" />
 
     <TextView
         android:id="@+id/summary_intro"
@@ -80,7 +86,10 @@
         android:textSize="15dp"
         android:text="COURSE SUMMARY"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true" />
 
     <TextView
         android:id="@+id/summary"
@@ -88,7 +97,10 @@
         android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true" />
 
     <Button
         android:id="@+id/post_test"
