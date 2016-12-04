@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
             Calendar firingCal= Calendar.getInstance();
 
             firingCal.set(Calendar.HOUR_OF_DAY, 10); // At the hour you wanna fire
-            firingCal.set(Calendar.MINUTE, 00); // Particular minute
+            firingCal.set(Calendar.MINUTE, 0); // Particular minute
             firingCal.set(Calendar.SECOND, 0); // particular second
 
             Long intendedTime = firingCal.getTimeInMillis();
