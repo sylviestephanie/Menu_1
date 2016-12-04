@@ -27,13 +27,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
+        super.onCreateContextMenu(menu, v, menuInfo);
+        Log.e("abdel","you call me?");
+    }
 
 
     private String username="", info, summary, video;
@@ -54,7 +57,7 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
         setContentView(R.layout.activity_course);
         youtube_vid=new GetVideo();
         layout  = (LinearLayout) findViewById(R.id.progressbar_view);
-        final String title = getIntent().getStringExtra("TITLE");
+        String title = getIntent().getStringExtra("TITLE");
         /*TextView tvTitle=(TextView)findViewById(R.id.title);*/
         info_text = (TextView) findViewById(R.id.info);
         summary_text = (TextView) findViewById(R.id.summary);
@@ -82,6 +85,15 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 intent.putExtra("course", course);
                 intent.putExtra("level", getIntent().getIntExtra("level",1));
                 view.getContext().startActivity(intent);
+                //finish();
+            }
+        });
+        registerForContextMenu(summary_text);
+        summary_text.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.e("hola","its a long click");
+                return false;
             }
         });
         summary_text.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
@@ -103,23 +115,15 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                     Log.e("YOU","wanna save something?");
                     Log.e("Here : ",getSelectedText(summary_text));
 
-                    Calendar c = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    String strDate = sdf.format(c.getTime());
-                    Log.e("mydate",strDate);
                     SharedPreferences pref
                             = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
                     new SaveNotes().execute(
                             String.format(
-                                    "username=%s&notes=%s&course=%s&date=%s",
+                                    "username=%s&notes=%s",
                                     pref.getString("USERNAME",""),
-                                    getSelectedText(summary_text),
-                                    title,
-                                    strDate
-
+                                    getSelectedText(summary_text)
                                     )
                     );
-
                     Toast.makeText(CourseActivity.this, "Note taken : "+getSelectedText(summary_text), Toast.LENGTH_SHORT).show();
                     mode.finish();
                     return true;
