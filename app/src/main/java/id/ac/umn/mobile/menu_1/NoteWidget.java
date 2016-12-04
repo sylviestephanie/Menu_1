@@ -23,7 +23,7 @@ public class NoteWidget extends AppWidgetProvider {
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.note_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        //views.setTextViewText(R.id.appwidget_text, widgetText);
 
 
         // Instruct the widget manager to update the widget
@@ -42,6 +42,7 @@ public class NoteWidget extends AppWidgetProvider {
                     appWidgetIds[i]);
             appWidgetManager.updateAppWidget(appWidgetIds[i],
                     remoteViews);
+            //updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
         }
     }
     private RemoteViews updateWidgetListView(Context context,
@@ -50,7 +51,6 @@ public class NoteWidget extends AppWidgetProvider {
         //which layout to show on widget
         RemoteViews remoteViews = new RemoteViews(
                 context.getPackageName(),R.layout.note_widget);
-
         //RemoteViews Service needed to provide adapter for ListView
         Intent svcIntent = new Intent(context, WidgetService.class);
         //passing app widget id to that RemoteViews Service
@@ -62,6 +62,7 @@ public class NoteWidget extends AppWidgetProvider {
         //setting adapter to listview of the widget
         remoteViews.setRemoteAdapter(appWidgetId, R.id.listViewWidget,
                 svcIntent);
+        //remoteViews.addView(R.id.appwidget_text,remoteViews);
         //setting an empty view in case of no data
         remoteViews.setEmptyView(R.id.listViewWidget, R.id.appwidget_text);
         return remoteViews;

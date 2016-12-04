@@ -32,7 +32,7 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
-        populateListItem();
+        //populateListItem();
     }
 
     private void populateListItem() {
@@ -167,13 +167,13 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
     */
     @Override
     public RemoteViews getViewAt(int position) {
-        final RemoteViews remoteView = new RemoteViews(
-                context.getPackageName(), R.layout.notes_row);
+        final RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.notes_row);
         Notes listItem = (Notes)listItemList.get(position);
         remoteView.setTextViewText(R.id.title, listItem.getCourse());
         remoteView.setTextViewText(R.id.note, listItem.getNote());
         remoteView.setTextViewText(R.id.date, listItem.getDate());
         remoteView.setTextViewText(R.id.delete,"");
+
 
         return remoteView;
     }
