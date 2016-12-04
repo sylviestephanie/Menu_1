@@ -28,7 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import static android.R.attr.x;
@@ -123,14 +125,20 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 if(item.getItemId()==saveToNotes.getItemId()){
                     Log.e("YOU","wanna save something?");
                     Log.e("Here : ",getSelectedText(summary_text));
-
+                    final String title = getIntent().getStringExtra("TITLE");
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String strDate = sdf.format(c.getTime());
+                    Log.e("mydate",strDate);
                     SharedPreferences pref
                             = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
                     new SaveNotes().execute(
                             String.format(
-                                    "username=%s&notes=%s",
+                                    "username=%s&notes=%s&course=%s&date=%s",
                                     pref.getString("USERNAME",""),
-                                    getSelectedText(summary_text)
+                                    getSelectedText(summary_text),
+                                    title,
+                                    strDate
                                     )
                     );
                     Toast.makeText(CourseActivity.this, "Note taken : "+getSelectedText(summary_text), Toast.LENGTH_SHORT).show();
