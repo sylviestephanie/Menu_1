@@ -14,6 +14,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,16 +28,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
-public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+import static android.R.attr.x;
 
-        super.onCreateContextMenu(menu, v, menuInfo);
-        Log.e("abdel","you call me?");
-    }
+public class CourseActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        Log.e("abdel","you call me?");
+//    }
 
 
     private String username="", info, summary, video;
@@ -88,40 +93,52 @@ public class CourseActivity extends AppCompatActivity implements YouTubePlayer.O
                 //finish();
             }
         });
-        registerForContextMenu(summary_text);
-        summary_text.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.e("hola","its a long click");
-                return false;
-            }
-        });
+//        registerForContextMenu(summary_text);
+//        summary_text.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Log.e("hola","its a long click");
+//                return false;
+//            }
+//        });
         summary_text.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                saveToNotes= menu.add("Take notes");
-
+                saveToNotes= menu.add("Take notes").setIcon(R.drawable.note);
+                //menu.add(0, 123, 0, "Definition").setIcon(R.drawable.icon_check);
+                Log.e("we create it bro","yeay");
                 return true;
             }
 
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                Log.e("on prep","yeay");
+                menu.removeItem(android.R.id.selectAll);
+                menu.removeItem(android.R.id.copy);
+
                 return true;
             }
 
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                Log.e("item clicked","here");
                 if(item.getItemId()==saveToNotes.getItemId()){
                     Log.e("YOU","wanna save something?");
                     Log.e("Here : ",getSelectedText(summary_text));
-
+                    final String title = getIntent().getStringExtra("TITLE");
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String strDate = sdf.format(c.getTime());
+                    Log.e("mydate",strDate);
                     SharedPreferences pref
                             = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE);
                     new SaveNotes().execute(
                             String.format(
-                                    "username=%s&notes=%s",
+                                    "username=%s&notes=%s&course=%s&date=%s",
                                     pref.getString("USERNAME",""),
-                                    getSelectedText(summary_text)
+                                    getSelectedText(summary_text),
+                                    title,
+                                    strDate
                                     )
                     );
                     Toast.makeText(CourseActivity.this, "Note taken : "+getSelectedText(summary_text), Toast.LENGTH_SHORT).show();

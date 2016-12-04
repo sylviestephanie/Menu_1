@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:elevation="4dp"
         android:background="?attr/colorPrimary"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+
+        />
 
     <fragment
         android:layout_below="@+id/toolbar_beginner"
