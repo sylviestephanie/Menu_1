@@ -205,8 +205,6 @@ public class MainActivity extends AppCompatActivity {
                 | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
 
-
-
     }
 
     @Override
@@ -291,30 +289,30 @@ public class MainActivity extends AppCompatActivity {
 
         displayFirebaseRegId();
         new GetProfilePicture().execute();
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        SharedPreferences pref = getSharedPreferences("LOGIN_PREFERENCES",MODE_PRIVATE);
+        //alarmmanager only created once
+        if(!pref.getBoolean("ALARMSET",false)) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
-        notificationIntent.addCategory("android.intent.category.DEFAULT");
+            Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
+            notificationIntent.addCategory("android.intent.category.DEFAULT");
 
-        PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Calendar firingCal= Calendar.getInstance();
-        Calendar currentCal = Calendar.getInstance();
+            Calendar firingCal= Calendar.getInstance();
 
-        firingCal.set(Calendar.HOUR_OF_DAY, 9); // At the hour you wanna fire
-        firingCal.set(Calendar.MINUTE, 0); // Particular minute
-        firingCal.set(Calendar.SECOND, 0); // particular second
+            firingCal.set(Calendar.HOUR_OF_DAY, 10); // At the hour you wanna fire
+            firingCal.set(Calendar.MINUTE, 00); // Particular minute
+            firingCal.set(Calendar.SECOND, 0); // particular second
 
+            Long intendedTime = firingCal.getTimeInMillis();
 
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,SystemClock.elapsedRealtime(),60*60*1000,broadcast);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,firingCal.getTimeInMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES/15,broadcast);
-//        if(firingCal.compareTo(currentCal) < 0) {
-//            firingCal.add(Calendar.DAY_OF_MONTH, 1);
-//        }
-//        Long intendedTime = firingCal.getTimeInMillis();
-        //alarmManager.setExact(AlarmManager.RTC_WAKEUP, intendedTime, broadcast);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intendedTime,AlarmManager.INTERVAL_DAY,broadcast);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intendedTime,1000 * 60 * 60,broadcast);
 
+            SharedPreferences.Editor prefEdit= getSharedPreferences("LOGIN_PREFERENCES",MODE_PRIVATE).edit();
+            prefEdit.putBoolean("ALARMSET", true);
+            prefEdit.commit();
+        }
     }
 
 
