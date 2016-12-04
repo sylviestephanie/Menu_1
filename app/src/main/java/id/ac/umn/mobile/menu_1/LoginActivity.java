@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                         = getSharedPreferences("LOGIN_PREFERENCES", MODE_PRIVATE).edit();
                 prefEdit.putString("USERNAME", user);
                 prefEdit.putString("CURRENT_LEVEL", hashMaps.get(0).get("body").toString());
+                prefEdit.putBoolean("ALARMSET", false);
                 prefEdit.commit();
 
                 SharedPreferences.Editor prefData
