@@ -273,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    //FirebaseMessaging.getInstance();
 
                     displayFirebaseRegId();
 
